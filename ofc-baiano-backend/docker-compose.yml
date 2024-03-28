@@ -1,0 +1,26 @@
+version: "3.8"
+services: 
+    pgadmin4:
+        image: dpage/pgadmin4
+        container_name: pgadmin4_container
+        environment: 
+          - PGADMIN_DEFAULT_EMAIL=wlypereiraa@gmail.com
+          - PGADMIN_DEFAULT_PASSWORD=12345
+        ports: 
+            - "89:80"
+        networks: 
+            - postgres-network
+    postgres:
+        image: postgres:10
+        container_name: postgres10_container
+        environment: 
+            - POSTGRES_PASSWORD=postgres
+        ports: 
+            - "5432:5432"
+        networks: 
+            - postgres-network
+        volumes: 
+            - /home/ofc-baiano/data/postgres:/var/lib/postgresql/data 
+networks:
+    postgres-network:
+        driver: bridge
