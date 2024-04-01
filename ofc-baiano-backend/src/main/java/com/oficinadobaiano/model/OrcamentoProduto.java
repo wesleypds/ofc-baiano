@@ -16,12 +16,12 @@ public class OrcamentoProduto {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto")
+    @JoinColumn(name = "id_produto", referencedColumnName = "id")
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto")
+    @JoinColumn(name = "id_orcamento", referencedColumnName = "id")
     private Orcamento orcamento;
 
-    private int quantidade;
+    private Integer quantidade;
 }
