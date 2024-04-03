@@ -1,10 +1,15 @@
 package com.oficinadobaiano.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
@@ -12,16 +17,16 @@ import lombok.Data;
 @Entity
 public class OrcamentoProduto {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto", referencedColumnName = "id")
+    @JoinColumn(name = "id_produto", referencedColumnName = "id", nullable = false)
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_orcamento", referencedColumnName = "id")
-    private Orcamento orcamento;
+    @ManyToMany(mappedBy = "produtoOrcamentos")
+    @JsonBackReference
+    private List<Orcamento> orcamentos;
 
     private Integer quantidade;
 }
