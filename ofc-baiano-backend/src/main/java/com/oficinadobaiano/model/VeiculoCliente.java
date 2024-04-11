@@ -18,20 +18,16 @@ public class VeiculoCliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id", nullable = false)
-    private Cliente cliente;
-
     @NotNull(message = "O campo Veículo é obrigatório")
     @ManyToOne
+    @JoinColumn(name = "id_veiculo", referencedColumnName = "id", nullable = false)
     private Veiculo veiculo;
 
-    @NotBlank
+    @NotBlank(message = "O campo Placa do Veículo é obrigatório")
     @Column(name = "placa_veiculo", nullable = false)
     private String placaVeiculo;
 
-    @NotBlank
+    @NotBlank(message = "O campo Ano do Veículo é obrigatório")
     @Column(name = "ano_veiculo", nullable = false)
     private String anoVeiculo;
 }

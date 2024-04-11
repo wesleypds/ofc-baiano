@@ -2,11 +2,13 @@ package com.oficinadobaiano.model;
 
 import java.util.*;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -32,6 +34,7 @@ public class Cliente {
 
     private String email;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private List<VeiculoCliente> veiculos;
 }
