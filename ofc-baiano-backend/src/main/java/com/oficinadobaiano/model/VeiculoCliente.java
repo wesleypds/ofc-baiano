@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -19,13 +19,12 @@ public class VeiculoCliente {
     private Long id;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id", nullable = false)
     private Cliente cliente;
 
-    @NotNull
-    @OneToOne
-    @JoinColumn(name = "id_veiculo", referencedColumnName = "id")
+    @NotNull(message = "O campo Veículo é obrigatório")
+    @ManyToOne
     private Veiculo veiculo;
 
     @NotBlank

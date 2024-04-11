@@ -1,10 +1,13 @@
 package com.oficinadobaiano.model;
 
+import java.util.*;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -28,4 +31,7 @@ public class Cliente {
     private String cpf;
 
     private String email;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<VeiculoCliente> veiculos;
 }
