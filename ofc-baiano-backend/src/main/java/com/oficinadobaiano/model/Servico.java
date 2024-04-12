@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public class Servico {
 
     private Double valor;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_funcionario", referencedColumnName = "id")
     private Funcionario funcionario;
 

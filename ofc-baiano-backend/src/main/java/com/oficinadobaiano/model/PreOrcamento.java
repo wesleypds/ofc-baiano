@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -19,11 +19,12 @@ public class PreOrcamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O campo Escolha é obrigatório")
+    @NotNull(message = "O campo Escolha é obrigatório")
     @Column(name = "escolha")
     private EscolhaCliente escolha;
 
     @NotNull(message = "O campo Cliente é obrigatório")
+    @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
