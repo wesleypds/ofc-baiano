@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.PreOrcamento;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.PreOrcamentoService;
 
 @RestController
@@ -35,7 +36,7 @@ public class PreOrcamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<PreOrcamento> create(@RequestBody PreOrcamento preOrcamento){
+    public ResponseEntity<PreOrcamento> create(@RequestBody PreOrcamento preOrcamento) throws MensagemValidacao{
         return ResponseEntity.status(HttpStatus.CREATED).body(preOrcamentoService.save(preOrcamento));
     }
 

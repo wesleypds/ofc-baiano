@@ -3,9 +3,10 @@ package com.oficinadobaiano.service;
 import java.util.*;
 
 import com.oficinadobaiano.model.PreOrcamento;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 
 public interface PreOrcamentoService {
-    PreOrcamento save(PreOrcamento preOrcamento);
+    PreOrcamento save(PreOrcamento preOrcamento) throws MensagemValidacao;
 
     List<PreOrcamento> findAll();
 

@@ -5,7 +5,9 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oficinadobaiano.enums.EscolhaCliente;
 import com.oficinadobaiano.model.PreOrcamento;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.repository.PreOrcamentoRepository;
 import com.oficinadobaiano.service.PreOrcamentoService;
 
@@ -16,7 +18,16 @@ public class PreOrcamentoServiceImpl implements PreOrcamentoService {
     private PreOrcamentoRepository preOrcamentoRepository;
 
     @Override
-    public PreOrcamento save(PreOrcamento preOrcamento) {
+    public PreOrcamento save(PreOrcamento preOrcamento) throws MensagemValidacao {
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO)) {
+            preOrcamento.setProblema(null);
+        }
+        
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
+            if (preOrcamento.getProblema() == null) {
+                throw new MensagemValidacao("O campo Problema Relatado precisa estar preenchido");
+            }
+        }
         return preOrcamentoRepository.save(preOrcamento);
     }
 
