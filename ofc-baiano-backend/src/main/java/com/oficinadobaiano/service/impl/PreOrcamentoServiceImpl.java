@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oficinadobaiano.enums.EscolhaCliente;
+import com.oficinadobaiano.model.Cliente;
 import com.oficinadobaiano.model.PreOrcamento;
 import com.oficinadobaiano.model.excecoes.MensagemValidacao;
+import com.oficinadobaiano.repository.ClienteRepository;
 import com.oficinadobaiano.repository.PreOrcamentoRepository;
 import com.oficinadobaiano.service.PreOrcamentoService;
 
@@ -17,8 +19,22 @@ public class PreOrcamentoServiceImpl implements PreOrcamentoService {
     @Autowired
     private PreOrcamentoRepository preOrcamentoRepository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @Override
     public PreOrcamento save(PreOrcamento preOrcamento) throws MensagemValidacao {
+        Optional<Cliente> cliente = clienteRepository.findById(preOrcamento.getCliente().getId());
+        cliente.get().setVeiculos(preOrcamento.getCliente().getVeiculos());
+
+        Cliente c = clienteRepository.save(cliente.get());
+
+        if (c.getVeiculos() == null || c.getVeiculos().size() == 0) {
+            throw new MensagemValidacao("É preciso ter pelo menos 1 veículo em cliente");
+        }
+
+        preOrcamento.setCliente(c);
+
         if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO)) {
             preOrcamento.setProblema(null);
         }

@@ -48,4 +48,10 @@ public class Orcamento {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_orcamento", referencedColumnName = "id", nullable = false)
     private List<OrcamentoServico> servicos;
+
+    private String problemaCliente;
+
+    private String problemaMecanico;
+
+    private Boolean aprovado;
 }

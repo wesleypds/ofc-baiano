@@ -20,7 +20,7 @@ public class PreOrcamento {
     private Long id;
 
     @NotNull(message = "O campo Escolha é obrigatório")
-    @Column(name = "escolha")
+    @Column(name = "escolha", nullable = false)
     private EscolhaCliente escolha;
 
     @NotNull(message = "O campo Cliente é obrigatório")
