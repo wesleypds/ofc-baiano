@@ -37,4 +37,6 @@ public class Cliente {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private List<VeiculoCliente> veiculos;
+
+    private boolean isOrcamento;
 }

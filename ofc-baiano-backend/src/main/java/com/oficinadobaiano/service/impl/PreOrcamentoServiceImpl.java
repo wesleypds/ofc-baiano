@@ -24,26 +24,15 @@ public class PreOrcamentoServiceImpl implements PreOrcamentoService {
 
     @Override
     public PreOrcamento save(PreOrcamento preOrcamento) throws MensagemValidacao {
-        Optional<Cliente> cliente = clienteRepository.findById(preOrcamento.getCliente().getId());
-        cliente.get().setVeiculos(preOrcamento.getCliente().getVeiculos());
-
-        Cliente c = clienteRepository.save(cliente.get());
-
-        if (c.getVeiculos() == null || c.getVeiculos().size() == 0) {
-            throw new MensagemValidacao("É preciso ter pelo menos 1 veículo em cliente");
-        }
-
-        preOrcamento.setCliente(c);
-
         if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO)) {
             preOrcamento.setProblema(null);
         }
-        
-        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
-            if (preOrcamento.getProblema() == null) {
-                throw new MensagemValidacao("O campo Problema Relatado precisa estar preenchido");
-            }
-        }
+        Optional<Cliente> cliente = clienteRepository.findById(preOrcamento.getCliente().getId());
+        cliente.get().setVeiculos(preOrcamento.getCliente().getVeiculos());
+        cliente.get().setOrcamento(true);
+        Cliente c = clienteRepository.save(cliente.get());
+        preOrcamento.setCliente(c);
+        saveValidation(preOrcamento);
         return preOrcamentoRepository.save(preOrcamento);
     }
 
@@ -67,4 +56,15 @@ public class PreOrcamentoServiceImpl implements PreOrcamentoService {
         preOrcamentoRepository.deleteById(id);
     }
 
+    private void saveValidation(PreOrcamento preOrcamento) throws MensagemValidacao {
+        if (preOrcamento.getCliente().getVeiculos() == null || preOrcamento.getCliente().getVeiculos().size() == 0) {
+            throw new MensagemValidacao("É preciso ter pelo menos 1 veículo em cliente");
+        }
+
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
+            if (preOrcamento.getProblema() == null) {
+                throw new MensagemValidacao("O campo Problema Relatado precisa estar preenchido");
+            }
+        }
+    }
 }

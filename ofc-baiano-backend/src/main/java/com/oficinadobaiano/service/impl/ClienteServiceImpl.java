@@ -37,6 +37,9 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente update(Cliente cliente) throws MensagemValidacao {
         saveValidation(cliente);
+        if (!cliente.isOrcamento() || cliente.getVeiculos() != null) {
+            cliente.setVeiculos(null);
+        }
         return clienteRepository.save(cliente);
     }
 

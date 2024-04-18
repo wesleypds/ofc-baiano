@@ -45,6 +45,7 @@ public class ClienteController {
 
     @PutMapping
     public ResponseEntity<Cliente> update(@RequestBody Cliente cliente) throws MensagemValidacao{
+        cliente.setOrcamento(false);
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.update(cliente));
     }
 
