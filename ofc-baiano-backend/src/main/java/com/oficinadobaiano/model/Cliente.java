@@ -23,7 +23,7 @@ public class Cliente {
     @NotBlank
     @Column(name = "nome", nullable = false)
     private String nome;
-
+    
     private String endereco;
 
     private String telefone;

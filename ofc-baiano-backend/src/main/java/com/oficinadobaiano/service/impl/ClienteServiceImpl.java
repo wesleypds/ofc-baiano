@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oficinadobaiano.model.Cliente;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.repository.ClienteRepository;
 import com.oficinadobaiano.service.ClienteService;
 
@@ -17,7 +18,8 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository clienteRepository;
 
     @Override
-    public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente) throws MensagemValidacao {
+        saveValidation(cliente);
         cliente.setVeiculos(null);
         return clienteRepository.save(cliente);
     }
@@ -33,12 +35,31 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente update(Cliente cliente) {
+    public Cliente update(Cliente cliente) throws MensagemValidacao {
+        saveValidation(cliente);
         return clienteRepository.save(cliente);
     }
 
     @Override
     public void remove(Long id) {
         clienteRepository.deleteById(id);
+    }
+
+    private void saveValidation(Cliente cliente) throws MensagemValidacao {
+        Cliente db = clienteRepository.findByCpf(cliente.getCpf());
+        if (db != null && cliente.getId() == null) {
+            throw new MensagemValidacao(String.format("Este cliente %s já está cadastrado.", cliente.getNome()));
+        }
+
+        if (cliente.getId() != null) {
+            Optional<Cliente> dbCliente = clienteRepository.findById(cliente.getId());
+            Cliente c = dbCliente.get();
+            if (!c.getCpf().equals(cliente.getCpf())) {
+                throw new MensagemValidacao("O campo CPF não pode ser alterado");
+            }
+            if (!c.getNome().equals(cliente.getNome())) {
+                throw new MensagemValidacao("O campo NOME não pode ser alterado");
+            }
+        }
     }
 }

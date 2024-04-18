@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Cliente;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.ClienteService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,12 +38,13 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente) throws MensagemValidacao{
+        cliente.setId(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente));
     }
 
     @PutMapping
-    public ResponseEntity<Cliente> update(@RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> update(@RequestBody Cliente cliente) throws MensagemValidacao{
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.update(cliente));
     }
 
