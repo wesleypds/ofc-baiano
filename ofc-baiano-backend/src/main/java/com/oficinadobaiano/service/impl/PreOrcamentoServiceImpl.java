@@ -57,6 +57,12 @@ public class PreOrcamentoServiceImpl implements PreOrcamentoService {
     }
 
     private void saveValidation(PreOrcamento preOrcamento) throws MensagemValidacao {
+        PreOrcamento db = preOrcamentoRepository.findByCliente(preOrcamento.getCliente());
+
+        if (db != null) {
+            throw new MensagemValidacao("Este cliente já está em um Pré Orçamento");
+        }
+
         if (preOrcamento.getCliente().getVeiculos() == null || preOrcamento.getCliente().getVeiculos().size() == 0) {
             throw new MensagemValidacao("É preciso ter pelo menos 1 veículo em cliente");
         }
