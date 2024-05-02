@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -24,10 +22,6 @@ public class Servico {
     private String tempoEstimado;
 
     private Double valor;
-
-    @ManyToOne
-    @JoinColumn(name = "id_funcionario", referencedColumnName = "id")
-    private Funcionario funcionario;
 
     private String complexidade;
 }
