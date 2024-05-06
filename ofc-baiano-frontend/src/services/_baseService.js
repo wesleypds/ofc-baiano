@@ -1,4 +1,4 @@
-const baseURL = 'https://api.seusite.com'; 
+const baseURL = 'http://localhost:8080/api'; 
 
 const headers = {
   'Content-Type': 'application/json',
