@@ -15,9 +15,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O campo usuário deve ser preenchido")
     @Column(name = "usuario", nullable = false)
     private String usuario;
+
+    @NotBlank
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
     @NotBlank
     @Column(name = "senha", nullable = false)
