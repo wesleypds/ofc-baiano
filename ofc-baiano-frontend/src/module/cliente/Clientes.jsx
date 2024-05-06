@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Menu } from "@mui/material";
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Menu, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
 
-const Usuarios = () => {
+const Clientes = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
 
@@ -18,36 +18,38 @@ const Usuarios = () => {
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <h1>
-        <b>Cadastro de Usuários</b>
+        <b>Cadastro de Clientes</b>
       </h1>
       <div>
         <FormControl fullWidth>
           <TextField 
-            label="Usuário" 
+            label="Nome Completo" 
             variant="outlined" 
             required 
             fullWidth 
           />
 
           <TextField 
-            label="Senha" 
-            variant="outlined" 
-            type="password" 
-            required 
-            fullWidth 
+            label="Endereço"
+            variant="outlined"
+            required
           />
 
-          <FormControl>
-            <InputLabel>Permissão do Usuário</InputLabel>
-            <Select label="permissao">
-              <MenuItem value="">Selecione...</MenuItem>
-              <MenuItem value="administrador">Administrador</MenuItem>
-              <MenuItem value="funcionario">Funcionário</MenuItem>
-            </Select>
-          </FormControl>
+          <TextField 
+            label="Telefone de Contato"
+            variant="outlined"
+            required
+          />
 
           <TextField 
-            label="Contato"
+            label="E-mail"
+            variant="outlined"
+            required
+          />
+
+
+          <TextField 
+            label="CPF"
             variant="outlined"
             required
           />
@@ -62,4 +64,4 @@ const Usuarios = () => {
   );
 };
 
-export default Usuarios;
+export default Clientes;
