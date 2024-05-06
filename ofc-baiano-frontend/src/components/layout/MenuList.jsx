@@ -39,14 +39,9 @@ export const MenuList = () =>{
                 Home
             </Menu.Item>
             <Menu.SubMenu key="Cadastros" icon={<PlusOutlined/>} title="Cadastro">
-                <Menu.Item key="produto" icon={<ProductOutlined/>} onClick={()=>redirectPage("produtos")} >Produtos</Menu.Item>
-<<<<<<< HEAD
+                <Menu.Item key="produtos" icon={<ProductOutlined/>} onClick={()=>redirectPage("produtos")} >Produtos</Menu.Item>
                 <Menu.Item key="servicos" icon={<GoldOutlined/>} onClick={()=>redirectPage("servicos")}>Serviços</Menu.Item>
-                <Menu.Item key="veiculo" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculos")}>Veículo</Menu.Item>
-=======
-                <Menu.Item key="servico" icon={<GoldOutlined/>} onClick={()=>redirectPage("servicos")}>Serviços</Menu.Item>
-                <Menu.Item key="veiculo" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculo")}>Veículo</Menu.Item>
->>>>>>> 2b652d2594f508236b282f3daa2a2b71f4cc06a3
+                <Menu.Item key="veiculos" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculos")}>Veículo</Menu.Item>
             </Menu.SubMenu>
             <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("cliente")}>
                 Cliente
