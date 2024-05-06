@@ -40,7 +40,7 @@ export const MenuList = () =>{
             </Menu.Item>
             <Menu.SubMenu key="Cadastros" icon={<PlusOutlined/>} title="Cadastro">
                 <Menu.Item key="produto" icon={<ProductOutlined/>} onClick={()=>redirectPage("produtos")} >Produtos</Menu.Item>
-                <Menu.Item key="servicos" icon={<GoldOutlined/>} onClick={()=>redirectPage("servico")}>Serviços</Menu.Item>
+                <Menu.Item key="servico" icon={<GoldOutlined/>} onClick={()=>redirectPage("servicos")}>Serviços</Menu.Item>
                 <Menu.Item key="veiculo" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculo")}>Veículo</Menu.Item>
             </Menu.SubMenu>
             <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("cliente")}>
@@ -59,8 +59,8 @@ export const MenuList = () =>{
                 Encerramentos
             </Menu.Item>
             <Menu.SubMenu key="configuracao" icon={<SettingOutlined/>} title="Configurações">
-                <Menu.Item key="usuario" icon={<UserAddOutlined/>} onClick={()=>redirectPage("usuario")} > Usuários</Menu.Item>
-                <Menu.Item key="funcionario" icon={<UsergroupAddOutlined/>} onClick={()=>redirectPage("funcionario")} > Funcionários</Menu.Item>
+                <Menu.Item key="usuario" icon={<UserAddOutlined/>} onClick={()=>redirectPage("usuarios")} > Usuários</Menu.Item>
+                <Menu.Item key="funcionario" icon={<UsergroupAddOutlined/>} onClick={()=>redirectPage("funcionarios")} > Funcionários</Menu.Item>
             </Menu.SubMenu>
         </Menu>
     )

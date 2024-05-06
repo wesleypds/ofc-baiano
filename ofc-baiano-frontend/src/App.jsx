@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./module/login/Login.jsx"
 import Home from "./module/home/Home.jsx"
 import Produtos from "./module/produto/Produtos.jsx"
+import Servicos from "./module/servico/Servicos.jsx"
+import Usuarios from "./module/usuario/Usuarios.jsx"
 
 
 // import Home from "./containers/home/Home.jsx"
@@ -19,6 +21,9 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/produtos" element={<Produtos/>}/>
+          <Route path="/produto" element={<Produtos/>}/>
+          <Route path="/servicos" element={<Servicos/>}/>
+          <Route path="/usuarios" element={<Usuarios/>}/>
         </Routes>
       </BrowserRouter>
     </div>
