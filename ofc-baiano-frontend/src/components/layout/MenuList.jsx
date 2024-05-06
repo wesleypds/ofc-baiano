@@ -39,28 +39,28 @@ export const MenuList = () =>{
                 Home
             </Menu.Item>
             <Menu.SubMenu key="Cadastros" icon={<PlusOutlined/>} title="Cadastro">
-                <Menu.Item key="produto" icon={<ProductOutlined/>} onClick={()=>redirectPage("produtos")} >Produtos</Menu.Item>
-                <Menu.Item key="servicos" icon={<GoldOutlined/>} onClick={()=>redirectPage("servico")}>Serviços</Menu.Item>
-                <Menu.Item key="veiculo" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculo")}>Veículo</Menu.Item>
+                <Menu.Item key="produtos" icon={<ProductOutlined/>} onClick={()=>redirectPage("produtos")} >Produtos</Menu.Item>
+                <Menu.Item key="servicos" icon={<GoldOutlined/>} onClick={()=>redirectPage("servicos")}>Serviços</Menu.Item>
+                <Menu.Item key="veiculos" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculos")}>Veículo</Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("cliente")}>
+            <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("clientes")}>
                 Cliente
             </Menu.Item>
-            <Menu.Item key="preOrcamento" icon={<PlusCircleOutlined/>} onClick={()=>redirectPage("preOrcamento")}>
+            <Menu.Item key="preOrcamento" icon={<PlusCircleOutlined/>} onClick={()=>redirectPage("preOrcamentos")}>
                 Pre-orçamento
             </Menu.Item>
-            <Menu.Item key="orcamento" icon={<MoneyCollectOutlined/>} onClick={()=>redirectPage("orcamento")}>
+            <Menu.Item key="orcamento" icon={<MoneyCollectOutlined/>} onClick={()=>redirectPage("orcamentos")}>
                 Orçamento
             </Menu.Item>
-            <Menu.Item key="agendamento" icon={<ScheduleOutlined/>} onClick={()=>redirectPage("agendamento")}>
+            <Menu.Item key="agendamento" icon={<ScheduleOutlined/>} onClick={()=>redirectPage("agendamentos")}>
                 Agendamentos
             </Menu.Item>
-            <Menu.Item key="encerramento" icon={<CheckCircleOutlined/>} onClick={()=>redirectPage("encerramento")}>
+            <Menu.Item key="encerramento" icon={<CheckCircleOutlined/>} onClick={()=>redirectPage("encerramentos")}>
                 Encerramentos
             </Menu.Item>
             <Menu.SubMenu key="configuracao" icon={<SettingOutlined/>} title="Configurações">
-                <Menu.Item key="usuario" icon={<UserAddOutlined/>} onClick={()=>redirectPage("usuario")} > Usuários</Menu.Item>
-                <Menu.Item key="funcionario" icon={<UsergroupAddOutlined/>} onClick={()=>redirectPage("funcionario")} > Funcionários</Menu.Item>
+                <Menu.Item key="usuario" icon={<UserAddOutlined/>} onClick={()=>redirectPage("usuarios")} > Usuários</Menu.Item>
+                <Menu.Item key="funcionario" icon={<UsergroupAddOutlined/>} onClick={()=>redirectPage("funcionarios")} > Funcionários</Menu.Item>
             </Menu.SubMenu>
         </Menu>
     )
