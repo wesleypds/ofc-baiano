@@ -9,6 +9,7 @@ import Servicos from "./module/servico/Servicos.jsx"
 import Usuarios from "./module/usuario/Usuarios.jsx"
 import Funcionarios from "./module/funcionario/Funcionarios.jsx"
 import Clientes from "./module/cliente/Clientes.jsx"
+import Veiculos from "./module/veiculo/Veiculos.jsx"
 
 function App() {
   return(
@@ -24,6 +25,7 @@ function App() {
           <Route path="/usuarios" element={<Usuarios/>}/>
           <Route path="/funcionarios" element={<Funcionarios/>}/>
           <Route path="/clientes" element={<Clientes/>}/>
+          <Route path="/veiculos" element={<Veiculos/>}/>
         </Routes>
       </BrowserRouter>
     </div>
