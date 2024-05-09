@@ -1,56 +1,35 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { TextField, Button, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
+import LayoutBase from "../../components/layout/LayoutBase.jsx"
+import { Button } from '@mui/material';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import LayoutBase from "../../components/layout/LayoutBase.jsx";
+const Usuario = () => {
 
-const Veiculos = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+  const redirect = () => {
+    const token  = locationUrl.state.token;
+    const userInfo = locationUrl.state.userInfo;
+    console.log(locationUrl)
+    navigate('/veiculo', { state: { token,  userInfo }});
+  }
 
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
-      navigate("/");
+      navigate('/'); 
     }
   }, [navigate]);
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
-      <h1 class="">
-        <b>Cadastro de Veículos</b>
-      </h1>
-      <div>
-        <FormControl fullWidth>
-          <TextField
-            label="Marca"
-            variant="outlined"
-            required
-            fullWidth
-          />
+      <h1><b>GRID Veículo</b></h1>
 
-          <TextField 
-            label="Modelo" 
-            variant="outlined" 
-            fullWidth 
-            required
-          />
-
-          <TextField 
-            label="Ano de Fabricação" 
-            variant="outlined" 
-            type="number"
-            required
-          />
-        </FormControl>
-
-        <Button type="submit" variant="contained">
-          Cadastrar
-        </Button>
-      </div>
+     <Button onClick={redirect} variant='contained'>teste</Button>
     </LayoutBase>
   );
 };
 
-export default Veiculos;
+export default Usuario;

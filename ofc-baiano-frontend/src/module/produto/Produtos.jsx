@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
-import { Button } from 'antd';
+import { Button } from '@mui/material';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Produtos = () => {
 
@@ -26,7 +27,7 @@ const Produtos = () => {
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <h1><b>GRID Produtos</b></h1>
 
-     <Button onClick={redirect}>teste</Button>
+     <Button onClick={redirect} variant='contained'>teste</Button>
     </LayoutBase>
   );
 };
