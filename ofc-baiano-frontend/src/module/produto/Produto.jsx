@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
-import { Button, FormControl, TextField } from '@mui/material';
+import { FormControl, TextField, InputAdornment, InputLabel, Input } from '@mui/material';
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import ButtonRegister from "../../components/ButtonRegister.jsx";
+import ButtonCancel from "../../components/ButtonCancel.jsx";
 
 const Produto = () => {
 
@@ -18,32 +22,47 @@ const Produto = () => {
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
-      <h1><b>Cadastro de Produtos</b></h1>
+      <div className="container-fluid">
+        <h1 className='mb-4'>
+          <b>Cadastro de Produtos</b>
+        </h1>
 
-      <FormControl fullWidth>
-        <TextField
-          label="Nome do Produto"
-          variant="outlined"
-          fullWidth
-          required
-        />
+        <div className="row mt-4 justify-content-md-center">
+          <div className="col-6">
+            <FormControl fullWidth>
+              <TextField
+                label="Nome do Produto"
+                variant="standard"
+                required
+                type="text"
+                className="mb-3"
+              />
 
-        <TextField
-          label="Quantidade em Estoque"
-          variant="outlined"
-          fullWidth
-          type="number"
-          required
-        />
+              <TextField
+                label="Quantidade em Estoque"
+                variant="standard"
+                type="number"
+                required
+                className="mb-3"
+              />
 
-        <TextField
-          label="Valor"
-          variant="outlined"
-          type="number"
-        />
+              <FormControl fullWidth className="mb-3" variant="standard">
+                <InputLabel>Valor</InputLabel>
+                <Input startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                />
+              </FormControl> 
+            </FormControl>
+          </div>
+        </div>
 
-        <Button type="submit" variant="contained">Cadastrar</Button>
-      </FormControl>
+        <div className="row mt-4 justify-content-md-center">
+          <div className="col-6">
+            <ButtonRegister />
+            
+            <ButtonCancel route="/produtos"/>
+          </div>
+        </div>
+      </div>
     </LayoutBase>
   );
 };

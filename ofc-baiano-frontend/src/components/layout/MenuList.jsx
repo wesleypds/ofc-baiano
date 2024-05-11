@@ -43,7 +43,7 @@ export const MenuList = () =>{
                 <Menu.Item key="servicos" icon={<GoldOutlined/>} onClick={()=>redirectPage("servicos")}>Serviços</Menu.Item>
                 <Menu.Item key="veiculos" icon={<CarOutlined/>} onClick={()=>redirectPage("veiculos")}>Veículo</Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("cliente")}>
+            <Menu.Item key="cliente" icon={<UserOutlined/>} onClick={()=>redirectPage("clientes")}>
                 Cliente
             </Menu.Item>
             <Menu.Item key="preOrcamento" icon={<PlusCircleOutlined/>} onClick={()=>redirectPage("preOrcamentos")}>
