@@ -15,23 +15,23 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O campo usuário deve ser preenchido")
+    @NotBlank(message = "O campo usuario deve ser preenchido")
     @Column(name = "usuario", nullable = false)
     private String usuario;
 
-    @NotBlank
+    @NotBlank(message = "O campo nome deve ser preenchido")
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotBlank
+    @NotBlank(message = "O campo senha deve ser preenchido")
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @NotBlank
+    @NotBlank(message = "O campo tipo deve ser preenchido")
     @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @NotBlank
+    @NotBlank(message = "O campo email deve ser preenchido")
     @Column(name = "email", nullable = false)
     private String email;
 }

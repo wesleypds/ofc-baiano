@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oficinadobaiano.model.Usuario;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.repository.UsuarioRepository;
 import com.oficinadobaiano.service.UsuarioService;
 
@@ -37,5 +38,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void remove(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    @Override
+    public Usuario userAutentication(String usuario, String senha) throws MensagemValidacao {
+        Usuario user = usuarioRepository.findByUsuario(usuario);
+        if (user == null) {
+            throw new MensagemValidacao("Usuário não encontrado");
+        }
+
+        if (!user.getSenha().equals(senha)) {
+            throw new MensagemValidacao("Senha incorreta");
+        }
+        return user;
     }
 }
