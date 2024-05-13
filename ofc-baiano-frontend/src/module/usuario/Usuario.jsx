@@ -90,13 +90,6 @@ const Usuario = () => {
               </FormControl>
 
               <TextField 
-                label="Telefone" 
-                variant="standard" 
-                required
-                className="mb-3"
-              />
-
-              <TextField 
                 label="E-Mail" 
                 variant="standard" 
                 required

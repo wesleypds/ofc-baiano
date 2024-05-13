@@ -35,9 +35,11 @@ function App() {
 
           <Route path="/usuario" element={<Usuario/>}/>
           <Route path="/usuarios" element={<Usuarios/>}/>
+          <Route path="/usuario/:id" element={<Usuario/>}/>
 
           <Route path="/funcionarios" element={<Funcionarios/>}/>
           <Route path="/funcionario" element={<Funcionario/>}/>
+          <Route path="/funcionario/:id" element={<Funcionario/>}/>
 
           <Route path="/clientes" element={<Clientes/>}/>
           <Route path="/cliente" element={<Cliente/>}/>

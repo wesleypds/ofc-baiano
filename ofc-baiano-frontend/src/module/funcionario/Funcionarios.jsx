@@ -3,31 +3,58 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
-import { Button } from '@mui/material';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ListAll, DeleteFuncionario } from "../../services/funcionario/funcionarioService.js";
+import { RealFormatter } from '../../utils/DataGridBase/RealFormatter.jsx';
+import LoadingCircular from '../../utils/LoadingCircular.jsx';
+import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
+
+
 
 const Funcionarios = () => {
 
   const locationUrl = useLocation();
   const navigate = useNavigate();
-  const redirect = () => {
-    const token  = locationUrl.state.token;
-    const userInfo = locationUrl.state.userInfo;
-    console.log(locationUrl)
-    navigate('/funcionario', { state: { token,  userInfo }});
-  }
+
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
-      navigate('/'); 
+    if (locationUrl.state.token !== "7f08f0ae81840a4a1887d3bdf9201efb") {
+      navigate('/');
     }
-  }, [navigate]);
+
+    (async() =>{
+      var resposta = await ListAll();
+      setRows(resposta.data);
+      setLoading(false)
+    })();
+
+  }, [navigate, locationUrl.state.token]);
+
+  var columns = [
+    { key: 'id', name: 'ID' },
+    { key: 'nome', name: 'Nome' },
+    { key: 'telefone', name: 'telefone' },
+    { key: 'email', name: 'Email'},
+    { key: 'salario', name: 'Salário', renderCell: RealFormatter},
+    { key: 'disponibilidade', name: 'Disponível'}
+  ]
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
-      <h1><b>GRID de Funcionários</b></h1>
-
-      <Button onClick={redirect} variant='contained'>teste</Button>
+      {loading ? (
+        <LoadingCircular text={"Carregando funcionários..."}/>
+      ) : (
+        <DataGridBase 
+          title={"Funcionários Cadastrados"}
+          data={rows}
+          baseColumns={columns}
+          routeAddItem={"funcionario"}
+          nameExport={"funcionarios"}
+          deleteMethod={async()=>{return await DeleteFuncionario()}}
+        />
+      )}
     </LayoutBase>
   );
 };

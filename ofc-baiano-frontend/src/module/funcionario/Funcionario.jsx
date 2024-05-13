@@ -44,14 +44,6 @@ const Funcionario = () => {
                 type="text"
               />
 
-              {/* <TextField 
-                label="Especioalidade"
-                variant="standard"
-                required
-                className="mb-3"
-                type="text"
-              /> */}
-
               <TextField 
                 label="E-mail"
                 variant="standard"
@@ -63,7 +55,7 @@ const Funcionario = () => {
 
               <FormControl fullWidth className="mb-3" variant="standard">
                 <InputLabel>Salário</InputLabel>
-                <Input startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                <Input type="number" startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                 />
               </FormControl> 
 

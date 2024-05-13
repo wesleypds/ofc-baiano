@@ -2,14 +2,15 @@ import { get, del } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
-    const result = await get('/usuarios');
+    const result = await get('/funcionarios');
     // console.log(result)
     // return result
 
     const rows = [
-      { id: 1, nome: 'John', usuario: "john", tipo: "Administrador", email: 'john@example.com'},
-      { id: 2, nome: 'Jane', usuario: "jane", tipo: "funcionário", email: 'jane@example.com'},
-      { id: 3, nome: 'Bob', usuario: "bob", tipo: "Administrador", email: 'bob@example.com'},
+      {id: 1, nome: "Tião", telefone: "(99) 99999-9999", email: "tiao@exemple.com", salario: 500.0, disponibilidade: "Sim"},
+      {id: 2, nome: "Mario", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
+      {id: 3, nome: "Luigi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
+      {id: 4, nome: "Yoshi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
     ]
 
     return {
@@ -36,10 +37,10 @@ export const ListAll = async () => {
   }
 };
 
-export const DeleteUsuario = async (id) => {
+export const DeleteFuncionario = async (id) => {
   try {
 
-    const result = await del('/usuario',id);
+    const result = await del('/funcionario',id);
     // console.log(result)
     // return result
 
