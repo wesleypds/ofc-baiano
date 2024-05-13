@@ -1,5 +1,7 @@
 package com.oficinadobaiano.model;
 
+import com.oficinadobaiano.enums.Complexidade;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,5 +25,5 @@ public class Servico {
 
     private Double valor;
 
-    private String complexidade;
+    private Complexidade complexidade;
 }
