@@ -37,20 +37,20 @@ const Funcionario = () => {
               />
 
               <TextField 
-                label="Contato"
+                label="Telefone"
                 variant="standard"
                 required
                 className="mb-3"
                 type="text"
               />
 
-              <TextField 
+              {/* <TextField 
                 label="Especioalidade"
                 variant="standard"
                 required
                 className="mb-3"
                 type="text"
-              />
+              /> */}
 
               <TextField 
                 label="E-mail"

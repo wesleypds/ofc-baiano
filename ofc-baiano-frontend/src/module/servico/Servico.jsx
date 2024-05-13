@@ -52,27 +52,21 @@ const Servico = () => {
                 className="mb-3"
               />
 
-              <FormControl fullWidth className="mb-3" variant="standard">
+              <FormControl fullWidth className="mb-2" variant="standard">
                 <InputLabel>Valor</InputLabel>
                 <Input startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                 />
               </FormControl> 
 
               <FormControl fullWidth className="mb-3" variant="standard">
-                <InputLabel>Mecânico Especialista</InputLabel>
+                <InputLabel>Complexidade</InputLabel>
                 <Select variant="standard">
-                  <MenuItem value="tiao lanterneiro">Tião Lanterneiro</MenuItem>
-                  <MenuItem value="carioca">Carioca</MenuItem>
-                  <MenuItem value="marquinho">Marquinho</MenuItem>
+                  <MenuItem value="fa cil">Fácil</MenuItem>
+                  <MenuItem value="medio">Médio</MenuItem>
+                  <MenuItem value="dificil">Difícil</MenuItem>
                 </Select>
               </FormControl>
 
-              <TextField 
-                label="Complexidade" 
-                variant="standard" 
-                fullWidth
-                className="mb-3" 
-              />
             </FormControl>
           </div>
         </div>

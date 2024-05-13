@@ -46,6 +46,15 @@ const Usuario = () => {
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <FormControl fullWidth>
+              
+            <TextField
+                label="Nome Completo"
+                variant="standard"
+                required
+                fullWidth
+                className="mb-3"
+              />
+              
               <TextField
                 label="Usuário"
                 variant="standard"
@@ -73,7 +82,7 @@ const Usuario = () => {
               </FormControl>
 
               <FormControl fullWidth className="mb-3" variant="standard">
-                <InputLabel>Permissão</InputLabel>
+                <InputLabel>Tipo</InputLabel>
                 <Select variant="standard">
                   <MenuItem value="administrador">Administrador</MenuItem>
                   <MenuItem value="funcionario">Funcionário</MenuItem>
@@ -81,9 +90,17 @@ const Usuario = () => {
               </FormControl>
 
               <TextField 
-                label="Contato" 
+                label="Telefone" 
                 variant="standard" 
                 required
+                className="mb-3"
+              />
+
+              <TextField 
+                label="E-Mail" 
+                variant="standard" 
+                required
+                type="email"
                 className="mb-3"
               />
             </FormControl>

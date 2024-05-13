@@ -33,6 +33,4 @@ public class Funcionario {
     private Boolean disponibilidade;
 
     private Integer servicosSendoFeitos;
-
-    //private List<Agendamento> agendamentos; 
 }

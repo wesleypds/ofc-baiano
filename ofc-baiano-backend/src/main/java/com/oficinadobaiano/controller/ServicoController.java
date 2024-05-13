@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Servico;
-import com.oficinadobaiano.model.Veiculo;
 import com.oficinadobaiano.model.dto.Corpo;
 import com.oficinadobaiano.service.ServicoService;
 
