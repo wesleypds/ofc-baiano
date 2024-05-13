@@ -37,7 +37,7 @@ function LayoutBase({children, userInfo}) {
       <Layout>
         <HeaderBar userInfo={userInfo}/>
         <Content style={contentStyle}>
-          <div style={{margin:"20px", backgroundColor:"white", padding:"25px", color:"black", textAlign: "center"}}>
+          <div style={{margin:"20px", backgroundColor:"white", padding:"25px", color:"black", textAlign: "center", minHeight:"450px" }}>
             {children}
           </div>
         </Content>

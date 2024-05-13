@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
 import { FormControl, TextField, InputAdornment, InputLabel, Input } from '@mui/material';
@@ -11,6 +11,7 @@ import ButtonCancel from "../../components/ButtonCancel.jsx";
 
 const Produto = () => {
 
+  const { id } = useParams(); 
   const locationUrl = useLocation();
   const navigate = useNavigate();
 
@@ -23,15 +24,23 @@ const Produto = () => {
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <div className="container-fluid">
-        <h1 className='mb-4'>
-          <b>Cadastro de Produtos</b>
-        </h1>
+        <h3 className='mb-4'>
+          <b>Cadastro de Produto</b>
+        </h3>
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <FormControl fullWidth>
               <TextField
                 label="Nome do Produto"
+                variant="standard"
+                required
+                type="text"
+                className="mb-3"
+              />
+
+              <TextField
+                label="Código do Produto"
                 variant="standard"
                 required
                 type="text"

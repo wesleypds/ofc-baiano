@@ -27,9 +27,11 @@ function App() {
 
           <Route path="/produtos" element={<Produtos/>}/>
           <Route path="/produto" element={<Produto/>}/>
+          <Route path="/produto/:id" element={<Produto />} />
 
           <Route path="/servicos" element={<Servicos/>}/>
           <Route path="/servico" element={<Servico/>}/>
+          <Route path="/servico/:id" element={<Servico />} />
 
           <Route path="/usuario" element={<Usuario/>}/>
           <Route path="/usuarios" element={<Usuarios/>}/>
@@ -42,6 +44,8 @@ function App() {
           
           <Route path="/veiculos" element={<Veiculos/>}/>
           <Route path="/veiculo" element={<Veiculo/>}/>
+          <Route path="/veiculo/:id" element={<Veiculo />} />
+
         </Routes>
       </BrowserRouter>
     </div>

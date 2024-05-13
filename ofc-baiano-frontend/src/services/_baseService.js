@@ -55,8 +55,10 @@ export const put = async (url, data) => {
   });
 };
 
-export const del = async (url) => {
-  return fetchData(url, {
+
+export const del = async (url, id) => {
+  const fullUrl = `${url}/${id}`;
+  return fetchData(fullUrl, {
     method: 'DELETE',
     headers
   });

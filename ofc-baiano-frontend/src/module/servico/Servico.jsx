@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 import {
   TextField,
   MenuItem,
@@ -19,6 +19,7 @@ import ButtonCancel from "../../components/ButtonCancel.jsx";
 const Servico = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams(); 
 
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
@@ -29,9 +30,9 @@ const Servico = () => {
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <div className="container-fluid">
-        <h1 className=" mb-4">
+        <h3 className=" mb-4">
           <b>Cadastro de Serviços</b>
-        </h1>
+        </h3>
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">

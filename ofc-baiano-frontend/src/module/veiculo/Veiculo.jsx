@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 import { TextField, Button, FormControl } from "@mui/material";
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
@@ -12,6 +12,7 @@ import ButtonCancel from "../../components/ButtonCancel.jsx";
 const Veiculo = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams(); 
 
 
   useEffect(() => {
@@ -23,9 +24,9 @@ const Veiculo = () => {
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <div className="container-fluid">
-        <h1 class="mb-4">
+        <h3 class="mb-4">
           <b>Cadastro de Veículos</b>
-        </h1>
+        </h3>
         
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
