@@ -34,11 +34,10 @@ const Servicos = () => {
 
   var columns = [
     { key: 'id', name: 'ID' },
-    { key: 'nome', name: 'Nome' },
-    { key: 'tipo', name: 'Tipo' },
+    { key: 'nome', name: 'Tipo' },
     { key: 'tempoEstimado', name: 'Tempo Estimado' },
-    { key: 'valor', name: 'Valor',  },
-    { key: 'complexidade', name: 'Complexidade', renderCell: RealFormatter },
+    { key: 'valor', name: 'Valor',renderCell: RealFormatter },
+    { key: 'complexidade', name: 'Complexidade' },
   ]
 
   return (
