@@ -14,8 +14,8 @@ const NotImplemented = ({ active,onClose, msg }) => {
   return (
     <>
       {isOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay-not-implemented">
+          <div className="modal-content-not-implemented">
             <AiFillWarning style={{ fontSize: '70px', color: 'gray' }} /> 
             <p>{msg?msg:"Esta funcionalidade não foi implementada ainda"}</p>
             <Button variant="contained" color="error" onClick={onClose} className='close-button'>
