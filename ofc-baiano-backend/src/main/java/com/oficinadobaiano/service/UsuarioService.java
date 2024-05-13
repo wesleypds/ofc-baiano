@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.oficinadobaiano.model.Usuario;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 
 public interface UsuarioService {
     Usuario save(Usuario usuario);
@@ -15,4 +16,6 @@ public interface UsuarioService {
     Usuario update(Usuario usuario);
 
     void remove(Long id);
+
+    Usuario userAutentication(String usuario, String senha) throws MensagemValidacao;
 }

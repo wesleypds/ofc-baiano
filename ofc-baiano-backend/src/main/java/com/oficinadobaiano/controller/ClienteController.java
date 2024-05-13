@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Cliente;
+import com.oficinadobaiano.model.dto.Corpo;
 import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.ClienteService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,26 +29,67 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Corpo> handleAllExceptions(Exception ex) {
+        Corpo error = new Corpo<>();
+        error.setSuccess(false);
+        String errorMessage = ex.getMessage();
+        error.setErrorMsg(errorMessage);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping
-    public ResponseEntity<List<Cliente>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
+    public ResponseEntity<Corpo> findAll() {
+        Corpo response = new Corpo<>();
+        List<Cliente> clientes = clienteService.findAll();
+        if (clientes.isEmpty()) {
+            response.setSuccess(true);
+            response.setErrorMsg("Sem clientes");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        response.setSuccess(true);
+        response.setData(clientes);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Cliente>> findById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findById(id));
+    public ResponseEntity<Corpo> findById(@PathVariable Long id){
+        Optional<Cliente> cliente = clienteService.findById(id);
+        Cliente c = cliente.get();
+        Corpo response = new Corpo<>();
+        if (cliente.isEmpty()) {
+            response.setSuccess(true);
+            response.setErrorMsg("Cliente não existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        response.setSuccess(true);
+        response.setData(c);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping
-    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente) throws MensagemValidacao{
+    public ResponseEntity<Corpo> create(@RequestBody Cliente cliente) throws MensagemValidacao{
         cliente.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente));
+        Cliente c = clienteService.save(cliente);
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(c);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PutMapping
-    public ResponseEntity<Cliente> update(@RequestBody Cliente cliente) throws MensagemValidacao{
+    public ResponseEntity<Corpo> update(@RequestBody Cliente cliente) throws MensagemValidacao{
         cliente.setOrcamento(false);
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.update(cliente));
+        Cliente c = clienteService.update(cliente);
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(c);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{id}")
