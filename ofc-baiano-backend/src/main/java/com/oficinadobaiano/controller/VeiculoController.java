@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Veiculo;
+import com.oficinadobaiano.model.dto.Corpo;
 import com.oficinadobaiano.service.VeiculoService;
 
 @RestController
@@ -24,24 +26,66 @@ public class VeiculoController {
     @Autowired
     private VeiculoService veiculoService;
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Corpo> handleAllExceptions(Exception ex) {
+        Corpo error = new Corpo<>();
+        error.setSuccess(false);
+        String errorMessage = ex.getMessage();
+        error.setErrorMsg(errorMessage);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping
-    public ResponseEntity<List<Veiculo>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findAll());
+    public ResponseEntity<Corpo> findAll() {
+        Corpo response = new Corpo<>();
+        List<Veiculo> veiculos = veiculoService.findAll();
+        if (veiculos.isEmpty()) {
+            response.setSuccess(true);
+            response.setErrorMsg("Sem veículos");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        response.setSuccess(true);
+        response.setData(veiculos);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Veiculo>> findById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.findById(id));
+    public ResponseEntity<Corpo> findById(@PathVariable Long id){
+        Optional<Veiculo> veiculo = veiculoService.findById(id);
+        Veiculo p = veiculo.get();
+        Corpo response = new Corpo<>();
+        if (veiculo.isEmpty()) {
+            response.setSuccess(true);
+            response.setErrorMsg("Veículo não existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        response.setSuccess(true);
+        response.setData(p);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping
-    public ResponseEntity<Veiculo> create(@RequestBody Veiculo veiculo){
-        return ResponseEntity.status(HttpStatus.CREATED).body(veiculoService.save(veiculo));
+    public ResponseEntity<Corpo> create(@RequestBody Veiculo veiculo){
+        veiculo.setId(null);
+        Veiculo p = veiculoService.save(veiculo);
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(p);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @PutMapping
-    public ResponseEntity<Veiculo> update(@RequestBody Veiculo veiculo){
-        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.update(veiculo));
+    public ResponseEntity<Corpo> update(@RequestBody Veiculo veiculo){
+        Veiculo p = veiculoService.update(veiculo);
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(p);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{id}")
