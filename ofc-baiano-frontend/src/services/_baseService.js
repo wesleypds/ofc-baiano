@@ -8,10 +8,6 @@ const headers = {
 const fetchData = async (url, options) => {
   try {
     const response = await fetch(baseURL + url, options);
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Erro na comunicação com a API');
-    }
     return response.json(); 
   } catch (error) {
     return {
@@ -24,7 +20,7 @@ const fetchData = async (url, options) => {
 export const get = async (url) => {
   return fetchData(url, {
     method: 'GET',
-    headers
+    headers,
   });
 };
 
@@ -32,10 +28,10 @@ export const get = async (url) => {
 export const getByParams = async (url, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
     const fullUrl = `${url}${queryString ? `?${queryString}` : ''}`;
-
+    console.log(fullUrl)
     return fetchData(fullUrl, {
         method: 'GET',
-        headers
+        headers,
     });
 };
 
@@ -60,6 +56,6 @@ export const del = async (url, id) => {
   const fullUrl = `${url}/${id}`;
   return fetchData(fullUrl, {
     method: 'DELETE',
-    headers
+    headers,
   });
 };

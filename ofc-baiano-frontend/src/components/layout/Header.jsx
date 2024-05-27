@@ -38,7 +38,7 @@ function HeaderBar({userInfo}) {
       <Dropdown overlay={menu} trigger={['click']}>
         <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
           <UserOutlined style={{ marginRight: 5 }} />
-          <span><b>{userInfo.name}</b></span>
+          <span><b>{userInfo.nome}</b></span>
         </div>
       </Dropdown>
     </Header>

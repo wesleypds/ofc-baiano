@@ -49,7 +49,7 @@ const Login= () => {
       }
       
       setIsInvalidLogin(true);
-      setInvalidLoginMsg(res.erroMsg);
+      setInvalidLoginMsg(res.errorMsg);
     }
   };
 

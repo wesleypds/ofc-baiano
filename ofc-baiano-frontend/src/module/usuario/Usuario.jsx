@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 import {
   TextField,
   InputAdornment,
@@ -20,9 +20,15 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 
+import { GetById } from "../../services/usuario/usuarioService.js";
+
+
 const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+
+  const { id } = useParams(); 
+  const [dataForm, setDataForm] = useState({});
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -30,10 +36,24 @@ const Usuario = () => {
     event.preventDefault();
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDataForm({
+      ...dataForm,
+      [name]: value
+    });
+  };
+
+  console.log(dataForm)
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
     }
+
+    (async() =>{
+      var dataUser = await GetById(id);
+      setDataForm(dataUser.data);
+    })();
   }, [navigate]);
 
   return (
@@ -51,6 +71,9 @@ const Usuario = () => {
                 label="Nome Completo"
                 variant="standard"
                 required
+                value={dataForm.nome}
+                name="nome"
+                onChange={handleChange}
                 fullWidth
                 className="mb-3"
               />
@@ -59,6 +82,9 @@ const Usuario = () => {
                 label="Usuário"
                 variant="standard"
                 required
+                value={dataForm.usuario}
+                name="usuario"
+                onChange={handleChange}
                 fullWidth
                 className="mb-3"
               />
@@ -67,6 +93,9 @@ const Usuario = () => {
                 <InputLabel>Senha</InputLabel>
                 <Input
                   type={showPassword ? 'text' : 'password'}
+                  value={dataForm.senha}
+                  name="senha"
+                  onChange={handleChange}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -81,10 +110,10 @@ const Usuario = () => {
                 />
               </FormControl>
 
-              <FormControl fullWidth className="mb-3" variant="standard">
+              <FormControl fullWidth className="mb-3" variant="filled">
                 <InputLabel>Tipo</InputLabel>
-                <Select variant="standard">
-                  <MenuItem value="administrador">Administrador</MenuItem>
+                <Select variant="filled" value={dataForm.tipo} name="tipo" onChange={handleChange}>
+                  <MenuItem value="admin">Administrador</MenuItem>
                   <MenuItem value="funcionario">Funcionário</MenuItem>
                 </Select>
               </FormControl>
@@ -93,6 +122,9 @@ const Usuario = () => {
                 label="E-Mail" 
                 variant="standard" 
                 required
+                value={dataForm.email}
+                name="email"
+                onChange={handleChange}
                 type="email"
                 className="mb-3"
               />
