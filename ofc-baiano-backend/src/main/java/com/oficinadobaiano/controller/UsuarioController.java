@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oficinadobaiano.base.CorsConfig;
 import com.oficinadobaiano.model.Usuario;
 import com.oficinadobaiano.model.dto.Corpo;
 import com.oficinadobaiano.model.dto.Token;
