@@ -35,7 +35,7 @@ export const getByParams = async (url, params = {}) => {
     });
 };
 
-export const post = async (url, data) => {
+export const postData = async (url, data) => {
   return fetchData(url, {
     method: 'POST',
     headers,
