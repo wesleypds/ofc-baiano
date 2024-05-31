@@ -1,4 +1,4 @@
-import { get, del } from '../_baseService.js';
+import { get, del, postData } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
@@ -54,6 +54,20 @@ export const GetById = async (id) => {
     return {
       success: false,
       erroMsg: "Erro ao processar",
+      options: null,
+      data: null,
+    };
+  }
+};
+
+export const SendFormPost = async (data) => {
+  try {
+    return await postData('/usuarios', data);
+  } 
+  catch (error) {
+    return {
+      success: false,
+      erroMsg: error,
       options: null,
       data: null,
     };

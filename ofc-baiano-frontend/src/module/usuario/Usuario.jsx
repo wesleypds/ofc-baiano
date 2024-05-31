@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import {
   TextField,
@@ -9,7 +9,8 @@ import {
   Select,
   MenuItem,
   IconButton,
-  Input
+  Input,
+  Box
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -20,16 +21,28 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 
-import { GetById } from "../../services/usuario/usuarioService.js";
-
+import {
+  GetById,
+  SendFormPost,
+} from "../../services/usuario/usuarioService.js";
 
 const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+  const [isInvalidUser, setIsInvalidUser] = useState(false);
 
+<<<<<<< HEAD
   const { id } = useParams(); 
   const [dataForm, setDataForm] = useState({});
   const [nome, setNome] = useState('');
+=======
+  const { id } = useParams();
+  const [dataForm, setDataForm] = useState({
+    nome: "",
+    senha: "",
+    tipo: "",
+  });
+>>>>>>> 775f64a3b4440021918b19316ed2c80d642477f3
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -41,20 +54,43 @@ const Usuario = () => {
     const { name, value } = e.target;
     setDataForm({
       ...dataForm,
-      [name]: value
+      [name]: value,
     });
   };
 
-  console.log(dataForm)
+  const redirectPage = (page) => {
+    const token = locationUrl.state.token;
+    const userInfo = locationUrl.state.userInfo;
+
+    navigate("/" + page, { state: { token, userInfo } });
+  };
+
+  const handleSubmitForm = (e) => {
+    if (id) {
+
+    } else {
+      (async () => {
+        var response = await SendFormPost(dataForm);
+        console.log(response)
+        if (response.success) {
+          redirectPage("usuarios");
+        } else {
+          setIsInvalidUser(true)
+        }
+      })();
+    }
+  };
+
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
     }
-
-    (async() =>{
+    if (id) {
+      (async () => {
       var dataUser = await GetById(id);
       setDataForm(dataUser.data);
     })();
+    }
   }, [navigate]);
 
   return (
@@ -72,11 +108,15 @@ const Usuario = () => {
                 label="Nome Completo"
                 variant="standard"
                 required
+                error
                 value={dataForm.nome}
                 name="nome"
                 onChange={handleChange}
                 fullWidth
                 className="mb-3"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
               
               <TextField
@@ -88,12 +128,15 @@ const Usuario = () => {
                 onChange={handleChange}
                 fullWidth
                 className="mb-3"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
 
               <FormControl className="mb-3" fullWidth variant="standard">
-                <InputLabel>Senha</InputLabel>
+                <InputLabel shrink>Senha</InputLabel>
                 <Input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={dataForm.senha}
                   name="senha"
                   onChange={handleChange}
@@ -112,8 +155,13 @@ const Usuario = () => {
               </FormControl>
 
               <FormControl fullWidth className="mb-3" variant="filled">
-                <InputLabel>Tipo</InputLabel>
-                <Select variant="filled" value={dataForm.tipo} name="tipo" onChange={handleChange}>
+                <InputLabel shrink>Tipo</InputLabel>
+                <Select
+                  variant="filled"
+                  value={dataForm.tipo}
+                  name="tipo"
+                  onChange={handleChange}
+                >
                   <MenuItem value="admin">Administrador</MenuItem>
                   <MenuItem value="funcionario">Funcionário</MenuItem>
                 </Select>
@@ -128,17 +176,25 @@ const Usuario = () => {
                 onChange={handleChange}
                 type="email"
                 className="mb-3"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </FormControl>
           </div>
         </div>
 
+        {isInvalidUser && (
+            <Box className={`user-disabled`}>
+                <center>Seu usuário está inativado</center>
+            </Box>
+        )}
+
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
-            <ButtonRegister />
+            <ButtonRegister handleSubmit={handleSubmitForm} />
             
-            <ButtonCancel route="/usuarios"/>
-            
+            <ButtonCancel route="/usuarios" />
           </div>
         </div>
       </div>
