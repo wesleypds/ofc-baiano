@@ -30,19 +30,14 @@ const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
   const [isInvalidUser, setIsInvalidUser] = useState(false);
-
-<<<<<<< HEAD
-  const { id } = useParams(); 
-  const [dataForm, setDataForm] = useState({});
+  
   const [nome, setNome] = useState('');
-=======
   const { id } = useParams();
   const [dataForm, setDataForm] = useState({
     nome: "",
     senha: "",
     tipo: "",
   });
->>>>>>> 775f64a3b4440021918b19316ed2c80d642477f3
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -87,9 +82,9 @@ const Usuario = () => {
     }
     if (id) {
       (async () => {
-      var dataUser = await GetById(id);
-      setDataForm(dataUser.data);
-    })();
+        var dataUser = await GetById(id);
+        setDataForm(dataUser.data);
+      })();
     }
   }, [navigate]);
 
@@ -103,8 +98,7 @@ const Usuario = () => {
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <FormControl fullWidth>
-              
-            <TextField
+              <TextField
                 label="Nome Completo"
                 variant="standard"
                 required
@@ -118,7 +112,7 @@ const Usuario = () => {
                   shrink: true,
                 }}
               />
-              
+
               <TextField
                 label="Usuário"
                 variant="standard"
@@ -167,9 +161,9 @@ const Usuario = () => {
                 </Select>
               </FormControl>
 
-              <TextField 
-                label="E-Mail" 
-                variant="standard" 
+              <TextField
+                label="E-Mail"
+                variant="standard"
                 required
                 value={dataForm.email}
                 name="email"
@@ -193,7 +187,7 @@ const Usuario = () => {
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <ButtonRegister handleSubmit={handleSubmitForm} />
-            
+
             <ButtonCancel route="/usuarios" />
           </div>
         </div>
