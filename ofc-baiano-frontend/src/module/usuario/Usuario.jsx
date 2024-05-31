@@ -29,6 +29,7 @@ const Usuario = () => {
 
   const { id } = useParams(); 
   const [dataForm, setDataForm] = useState({});
+  const [nome, setNome] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
