@@ -41,11 +41,6 @@ public class ProdutoController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Produto> produtos = produtoService.findAll();
-        if (produtos.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem produtos");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(produtos);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -57,11 +52,6 @@ public class ProdutoController {
         Optional<Produto> produto = produtoService.findById(id);
         Produto p = produto.get();
         Corpo response = new Corpo<>();
-        if (produto.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Produto não existe");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(p);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -88,8 +78,14 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Produto> produto = produtoService.findById(id);
+        Produto p = produto.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(p);
         produtoService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

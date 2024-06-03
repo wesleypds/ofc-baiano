@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oficinadobaiano.base.CorsConfig;
 import com.oficinadobaiano.model.Usuario;
 import com.oficinadobaiano.model.dto.Corpo;
 import com.oficinadobaiano.model.dto.Token;
@@ -47,11 +46,6 @@ public class UsuarioController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Usuario> usuario = usuarioService.findAll();
-        if (usuario.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem usuários");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setOptions(new Token("7f08f0ae81840a4a1887d3bdf9201efb"));
         response.setData(usuario);

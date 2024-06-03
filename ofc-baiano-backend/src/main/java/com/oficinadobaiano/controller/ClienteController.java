@@ -44,11 +44,6 @@ public class ClienteController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Cliente> clientes = clienteService.findAll();
-        if (clientes.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem clientes");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(clientes);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -60,11 +55,6 @@ public class ClienteController {
         Optional<Cliente> cliente = clienteService.findById(id);
         Cliente c = cliente.get();
         Corpo response = new Corpo<>();
-        if (cliente.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Cliente não existe");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(c);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -92,8 +82,14 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Cliente> cliente = clienteService.findById(id);
+        Cliente c = cliente.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(c);
         clienteService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

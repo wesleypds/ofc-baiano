@@ -41,11 +41,6 @@ public class FuncionarioController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Funcionario> funcionarios = funcionarioService.findAll();
-        if (funcionarios.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem funcionários");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(funcionarios);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -57,11 +52,6 @@ public class FuncionarioController {
         Optional<Funcionario> funcionario = funcionarioService.findById(id);
         Funcionario f = funcionario.get();
         Corpo response = new Corpo<>();
-        if (funcionario.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Funcionário não existe");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(f);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -88,8 +78,14 @@ public class FuncionarioController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Funcionario> funcionario = funcionarioService.findById(id);
+        Funcionario f = funcionario.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(f);
         funcionarioService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

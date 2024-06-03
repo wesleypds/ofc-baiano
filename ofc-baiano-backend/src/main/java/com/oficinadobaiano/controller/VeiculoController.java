@@ -41,11 +41,6 @@ public class VeiculoController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Veiculo> veiculos = veiculoService.findAll();
-        if (veiculos.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem veículos");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(veiculos);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -57,11 +52,6 @@ public class VeiculoController {
         Optional<Veiculo> veiculo = veiculoService.findById(id);
         Veiculo p = veiculo.get();
         Corpo response = new Corpo<>();
-        if (veiculo.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Veículo não existe");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(p);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -88,9 +78,15 @@ public class VeiculoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Veiculo> veiculo = veiculoService.findById(id);
+        Veiculo p = veiculo.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(p);
         veiculoService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

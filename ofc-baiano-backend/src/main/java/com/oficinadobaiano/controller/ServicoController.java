@@ -41,11 +41,6 @@ public class ServicoController {
     public ResponseEntity<Corpo> findAll() {
         Corpo response = new Corpo<>();
         List<Servico> servicos = servicoService.findAll();
-        if (servicos.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Sem serviços");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(servicos);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -57,11 +52,6 @@ public class ServicoController {
         Optional<Servico> servico = servicoService.findById(id);
         Servico p = servico.get();
         Corpo response = new Corpo<>();
-        if (servico.isEmpty()) {
-            response.setSuccess(true);
-            response.setErrorMsg("Serviço não existe");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
         response.setSuccess(true);
         response.setData(p);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -88,8 +78,14 @@ public class ServicoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
+        Optional<Servico> servico = servicoService.findById(id);
+        Servico p = servico.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(p);
         servicoService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
