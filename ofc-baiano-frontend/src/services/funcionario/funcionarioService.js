@@ -9,7 +9,7 @@ export const ListAll = async () => {
     const rows = [
       {id: 1, nome: "Tião", telefone: "(99) 99999-9999", email: "tiao@exemple.com", salario: 500.0, disponibilidade: "Sim"},
       {id: 2, nome: "Mario", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
-      {id: 3, nome: "Luigi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
+      {id: 3, nome: "Luigi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500, disponibilidade: "Sim"},
       {id: 4, nome: "Yoshi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
     ]
 
