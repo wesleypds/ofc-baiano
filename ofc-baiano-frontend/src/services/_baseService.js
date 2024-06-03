@@ -28,7 +28,6 @@ export const get = async (url) => {
 export const getByParams = async (url, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
     const fullUrl = `${url}${queryString ? `?${queryString}` : ''}`;
-    console.log(fullUrl)
     return fetchData(fullUrl, {
         method: 'GET',
         headers,
@@ -43,7 +42,7 @@ export const postData = async (url, data) => {
   });
 };
 
-export const put = async (url, data) => {
+export const putData = async (url, data) => {
   return fetchData(url, {
     method: 'PUT',
     headers,

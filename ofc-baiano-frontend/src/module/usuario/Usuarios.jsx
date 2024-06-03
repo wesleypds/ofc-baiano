@@ -47,7 +47,7 @@ const Usuario = () => {
           baseColumns={columns}
           routeAddItem={"usuario"}
           nameExport={"usuarios"}
-          deleteMethod={async()=>{return await DeleteUsuario()}}
+          deleteMethod={async(id)=>{return await DeleteUsuario(id)}}
         />
       )}
     </LayoutBase>

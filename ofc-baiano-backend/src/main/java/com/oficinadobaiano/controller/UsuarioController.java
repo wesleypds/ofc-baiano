@@ -101,9 +101,15 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @SuppressWarnings({"rawtypes","unchecked"})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        Usuario user = usuario.get();
+        Corpo response = new Corpo<>();
+        response.setSuccess(true);
+        response.setData(user);
         usuarioService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

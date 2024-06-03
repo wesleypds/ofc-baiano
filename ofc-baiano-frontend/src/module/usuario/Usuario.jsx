@@ -24,6 +24,7 @@ import ButtonCancel from "../../components/ButtonCancel.jsx";
 import {
   GetById,
   SendFormPost,
+  SendFormPut,
 } from "../../services/usuario/usuarioService.js";
 
 const Usuario = () => {
@@ -62,7 +63,15 @@ const Usuario = () => {
 
   const handleSubmitForm = (e) => {
     if (id) {
-
+      (async () => {
+        var response = await SendFormPut(dataForm);
+        console.log(response)
+        if (response.success) {
+          redirectPage("usuarios");
+        } else {
+          setIsInvalidUser(true)
+        }
+      })();
     } else {
       (async () => {
         var response = await SendFormPost(dataForm);
