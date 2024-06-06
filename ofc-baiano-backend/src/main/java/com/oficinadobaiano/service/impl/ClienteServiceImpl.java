@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oficinadobaiano.model.Cliente;
+import com.oficinadobaiano.model.PreOrcamento;
 import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.repository.ClienteRepository;
+import com.oficinadobaiano.repository.PreOrcamentoRepository;
 import com.oficinadobaiano.service.ClienteService;
 
 @Service
@@ -16,6 +18,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private PreOrcamentoRepository preOrcamentoRepository;
 
     @Override
     public Cliente save(Cliente cliente) throws MensagemValidacao {
@@ -44,7 +49,13 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws MensagemValidacao {
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        PreOrcamento preOrcamento = preOrcamentoRepository.findByCliente(cliente);
+        if (preOrcamento != null) {
+            throw new MensagemValidacao(String.format("Este cliente %s está com um pré-orçamento em aberto.", preOrcamento.getCliente().getNome()));
+        }
         clienteRepository.deleteById(id);
     }
 

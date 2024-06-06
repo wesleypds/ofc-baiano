@@ -84,7 +84,7 @@ public class ClienteController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) throws MensagemValidacao{
         Optional<Cliente> cliente = clienteService.findById(id);
         Cliente c = cliente.get();
         Corpo response = new Corpo<>();

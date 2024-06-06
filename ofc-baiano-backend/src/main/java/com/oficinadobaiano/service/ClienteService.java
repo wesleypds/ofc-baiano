@@ -15,5 +15,5 @@ public interface ClienteService {
 
     Cliente update(Cliente cliente) throws MensagemValidacao;
 
-    void remove(Long id);
+    void remove(Long id) throws MensagemValidacao;
 }
