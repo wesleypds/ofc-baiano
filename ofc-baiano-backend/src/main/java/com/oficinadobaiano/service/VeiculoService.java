@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.oficinadobaiano.model.Veiculo;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 
 public interface VeiculoService {
     Veiculo save(Veiculo veiculo);
@@ -14,5 +15,5 @@ public interface VeiculoService {
 
     Veiculo update(Veiculo veiculo);
 
-    void remove(Long id);
+    void remove(Long id) throws MensagemValidacao;
 }

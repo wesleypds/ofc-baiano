@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oficinadobaiano.model.Veiculo;
+import com.oficinadobaiano.model.VeiculoCliente;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
+import com.oficinadobaiano.repository.VeiculoClienteRepository;
 import com.oficinadobaiano.repository.VeiculoRepository;
 import com.oficinadobaiano.service.VeiculoService;
 
@@ -14,6 +17,9 @@ import com.oficinadobaiano.service.VeiculoService;
 public class VeiculoServiceImpl implements VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
+
+    @Autowired
+    private VeiculoClienteRepository veiculoClienteRepository;
 
     @Override
     public Veiculo save(Veiculo veiculo) {
@@ -36,7 +42,13 @@ public class VeiculoServiceImpl implements VeiculoService {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws MensagemValidacao {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setId(id);
+        VeiculoCliente v = veiculoClienteRepository.findByVeiculo(veiculo);
+        if (v != null) {
+            throw new MensagemValidacao("Este veículo está associado a um cliente.");
+        }
         veiculoRepository.deleteById(id);
     }
 }

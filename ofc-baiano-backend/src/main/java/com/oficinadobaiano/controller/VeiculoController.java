@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Veiculo;
 import com.oficinadobaiano.model.dto.Corpo;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.VeiculoService;
 
 @RestController
@@ -80,7 +81,7 @@ public class VeiculoController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) throws MensagemValidacao{
         Optional<Veiculo> veiculo = veiculoService.findById(id);
         Veiculo p = veiculo.get();
         Corpo response = new Corpo<>();
