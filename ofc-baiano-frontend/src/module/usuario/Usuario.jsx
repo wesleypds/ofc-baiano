@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import {HandleSubmitForm} from "../../utils/Form/FormUtils.js"
 
 import {
   TextField,
@@ -21,18 +22,13 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 
-import {
-  GetById,
-  SendFormPost,
-  SendFormPut,
-} from "../../services/usuario/usuarioService.js";
+import { GetById } from "../../services/usuario/usuarioService.js";
 
 const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
-  const [isInvalidUser, setIsInvalidUser] = useState(false);
+  const [isInvalidForm, setIsInvalidForm] = useState(false);
   
-  const [nome, setNome] = useState('');
   const { id } = useParams();
   const [dataForm, setDataForm] = useState({
     nome: "",
@@ -54,36 +50,6 @@ const Usuario = () => {
     });
   };
 
-  const redirectPage = (page) => {
-    const token = locationUrl.state.token;
-    const userInfo = locationUrl.state.userInfo;
-
-    navigate("/" + page, { state: { token, userInfo } });
-  };
-
-  const handleSubmitForm = (e) => {
-    if (id) {
-      (async () => {
-        var response = await SendFormPut(dataForm);
-        console.log(response)
-        if (response.success) {
-          redirectPage("usuarios");
-        } else {
-          setIsInvalidUser(true)
-        }
-      })();
-    } else {
-      (async () => {
-        var response = await SendFormPost(dataForm);
-        console.log(response)
-        if (response.success) {
-          redirectPage("usuarios");
-        } else {
-          setIsInvalidUser(true)
-        }
-      })();
-    }
-  };
 
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
@@ -187,15 +153,15 @@ const Usuario = () => {
           </div>
         </div>
 
-        {isInvalidUser && (
-            <Box className={`user-disabled`}>
-                <center>Seu usuário está inativado</center>
+        {isInvalidForm && (
+            <Box className={`user-disabled text-light` }>
+                <center>Houve um erro em atualizar seus dados, verifique os campos</center>
             </Box>
         )}
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
-            <ButtonRegister handleSubmit={handleSubmitForm} />
+            <ButtonRegister handleSubmit={()=>{HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, locationUrl, navigate)}} />
 
             <ButtonCancel route="/usuarios" />
           </div>
