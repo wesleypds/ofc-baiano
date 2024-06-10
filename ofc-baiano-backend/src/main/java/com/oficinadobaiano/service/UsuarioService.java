@@ -7,7 +7,7 @@ import com.oficinadobaiano.model.Usuario;
 import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 
 public interface UsuarioService {
-    Usuario save(Usuario usuario);
+    Usuario save(Usuario usuario) throws MensagemValidacao;
 
     List<Usuario> findAll();
 

@@ -16,7 +16,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public Usuario save(Usuario usuario) {
+    public Usuario save(Usuario usuario) throws MensagemValidacao {
+        saveValidation(usuario);
         return usuarioRepository.save(usuario);
     }
 
@@ -38,6 +39,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void remove(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    private void saveValidation(Usuario usuario) throws MensagemValidacao {
+        Usuario user = usuarioRepository.findByUsuario(usuario.getUsuario());
+        if (user != null) {
+            throw new MensagemValidacao("Usuário já cadastrado");
+        }
+        user = null;
+        user = usuarioRepository.findByEmail(usuario.getEmail());
+        if (user != null) {
+            throw new MensagemValidacao("E-mail já vinculado a um usuário");
+        }
     }
 
     @Override

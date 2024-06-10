@@ -77,7 +77,7 @@ public class UsuarioController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping
-    public ResponseEntity<Corpo> create(@RequestBody Usuario usuario) {
+    public ResponseEntity<Corpo> create(@RequestBody Usuario usuario) throws MensagemValidacao {
         Usuario user = usuarioService.save(usuario);
         Corpo response = new Corpo<>();
         response.setSuccess(true);
