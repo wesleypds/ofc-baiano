@@ -51,6 +51,19 @@ const Usuario = () => {
   };
 
 
+  const submitForm = ()=>{
+    if(isValidForm()){
+      HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, locationUrl, navigate)
+    }
+  }
+
+  const isValidForm = ()=>{
+    return true
+  }
+
+
+
+
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
@@ -161,7 +174,7 @@ const Usuario = () => {
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
-            <ButtonRegister handleSubmit={()=>{HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, locationUrl, navigate)}} />
+            <ButtonRegister handleSubmit={submitForm} />
 
             <ButtonCancel route="/usuarios" />
           </div>
