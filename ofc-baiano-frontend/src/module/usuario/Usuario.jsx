@@ -28,6 +28,7 @@ const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
   const [isInvalidForm, setIsInvalidForm] = useState(false);
+  const [titleButton, setTitleButton] = useState("Cadastrar");
   
   const { id } = useParams();
   const [dataForm, setDataForm] = useState({
@@ -69,6 +70,7 @@ const Usuario = () => {
       navigate("/");
     }
     if (id) {
+      setTitleButton("Atualizar");
       (async () => {
         var dataUser = await GetById(id);
         setDataForm(dataUser.data);
@@ -174,7 +176,7 @@ const Usuario = () => {
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
-            <ButtonRegister handleSubmit={submitForm} />
+            <ButtonRegister handleSubmit={submitForm} title={titleButton}/>
 
             <ButtonCancel route="/usuarios" />
           </div>
