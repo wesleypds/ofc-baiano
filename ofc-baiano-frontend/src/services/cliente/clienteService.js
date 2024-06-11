@@ -2,22 +2,8 @@ import { get, del, postData, putData } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
-    // const result = await get('/clientes');
-    // return result
-
-    const rows = [
-      {id: 1, nome: "Tião", telefone: "(99) 99999-9999", email: "tiao@exemple.com", cpf: "077.895.330-02"},
-      {id: 2, nome: "Mario", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", cpf: "350.216.960-84"},
-      {id: 3, nome: "Luigi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", cpf: "700.143.170-28"},
-      {id: 4, nome: "Yoshi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", cpf: "929.539.560-34"},
-    ]
-
-    return {
-      success: true,
-      erroMsg: null,
-      options: null,
-      data: rows,
-    };
+    const result = await get('/clientes');
+    return result;
   } 
   catch (error) {
     return {
@@ -31,29 +17,13 @@ export const ListAll = async () => {
 
 export const DeleteCliente = async (id) => {
   try {
-
-    const result = await del('/cliente',id);
-    // console.log(result)
-    // return result
-
-    return {
-        success: true,
-        erroMsg: null,
-        options: null,
-        data: null
-    };
-
-    return {
-        success: false,
-        erroMsg: "login inválido",
-        options: null,
-        data: null,
-    };
+    const result = await del(`/clientes/${id}`);
+    return result;
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar o login",
+      erroMsg: "Erro ao processar o pedido de exclusão",
       options: null,
       data: null,
     };
@@ -62,7 +32,8 @@ export const DeleteCliente = async (id) => {
 
 export const GetById = async (id) => {
   try {
-    return await get('/clientes/'+id);
+    const result = await get(`/clientes/${id}`);
+    return result;
   } 
   catch (error) {
     return {
@@ -76,7 +47,8 @@ export const GetById = async (id) => {
 
 export const SendFormPost = async (data) => {
   try {
-    return await postData('/clientes', data);
+    const result = await postData('/clientes', data);
+    return result;
   } 
   catch (error) {
     return {
@@ -90,7 +62,8 @@ export const SendFormPost = async (data) => {
 
 export const SendFormPut = async (data) => {
   try {
-    return await putData('/clientes', data);
+    const result = await putData('/clientes', data);
+    return result;
   } 
   catch (error) {
     return {
