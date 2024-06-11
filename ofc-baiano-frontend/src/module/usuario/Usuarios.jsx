@@ -6,7 +6,7 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-import { ListAll, DeleteUsuario } from "../../services/usuario/usuarioService.js";
+import { ListAll, DeleteById } from "../../services/usuario/usuarioService.js";
 
 const Usuario = () => {
 
@@ -47,7 +47,7 @@ const Usuario = () => {
           baseColumns={columns}
           routeAddItem={"usuario"}
           nameExport={"usuarios"}
-          deleteMethod={async(id)=>{return await DeleteUsuario(id)}}
+          deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
     </LayoutBase>

@@ -8,23 +8,22 @@ export const ListAll = async () => {
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar",
+      errorMsg: "Erro ao processar",
       options: null,
       data: null,
     };
   }
 };
 
-export const DeleteUsuario = async (id) => {
+export const DeleteById = async (id) => {
   try {
     const result = await del('/usuarios',id);
     return result
   } 
   catch (error) {
-    console.error(error)
     return {
       success: false,
-      erroMsg: "Erro ao processar a exclusão",
+      errorMsg: "Erro ao processar a exclusão",
       options: null,
       data: null,
     };
@@ -38,7 +37,7 @@ export const GetById = async (id) => {
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar",
+      errorMsg: "Erro ao processar",
       options: null,
       data: null,
     };
@@ -52,7 +51,7 @@ export const SendFormPost = async (data) => {
   catch (error) {
     return {
       success: false,
-      erroMsg: error,
+      errorMsg: error,
       options: null,
       data: null,
     };
@@ -66,7 +65,7 @@ export const SendFormPut = async (data) => {
   catch (error) {
     return {
       success: false,
-      erroMsg: error,
+      errorMsg: error,
       options: null,
       data: null,
     };

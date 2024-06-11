@@ -1,8 +1,4 @@
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import {
-  SendFormPost,
-  SendFormPut,
-} from "../../services/usuario/usuarioService.js";
 
 
 const redirectPage = (page,locationUrl, navigate) => {
@@ -13,26 +9,42 @@ const redirectPage = (page,locationUrl, navigate) => {
   navigate("/" + page, { state: { token, userInfo } });
 };
 
+const loadModulePost = async (action) => {
+    const module = await import("../../services/"+action+"/"+action+"Service.js");
+    return module.SendFormPost;
+}
 
-export const HandleSubmitForm = (id, routePage, dataForm, setIsInvalidForm,locationUrl, navigate) => {
+const loadModulePut = async (action) => {
+  const module = await import("../../services/"+action+"/"+action+"Service.js");
+  return module.SendFormPut;
+}
+
+export const HandleSubmitForm = (id, routePage, dataForm, setIsInvalidForm, setMsgInvalidForm,locationUrl, navigate,) => {
     if (id) {
       (async () => {
+        const SendFormPut = await loadModulePut(routePage.slice(0, -1));
+
         var response = await SendFormPut(dataForm);
 
         if (response.success) {
           redirectPage(routePage, locationUrl, navigate);
         } else {
           setIsInvalidForm(true)
+          setMsgInvalidForm(response.errorMsg)
         }
       })()
     } else {
       (async () => {
+
+        const SendFormPost = await loadModulePost(routePage.slice(0, -1));
+
         var response = await SendFormPost(dataForm);
         if (response.success) {
           redirectPage(routePage, locationUrl, navigate);
 
         } else {
           setIsInvalidForm(true)
+          setMsgInvalidForm(response.errorMsg)
         }
       })();
     }

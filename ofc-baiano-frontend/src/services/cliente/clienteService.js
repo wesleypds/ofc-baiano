@@ -1,29 +1,30 @@
+
 import { get, del, postData, putData } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
     const result = await get('/clientes');
-    return result;
+    return result
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar",
+      errorMsg: "Erro ao processar",
       options: null,
       data: null,
     };
   }
 };
 
-export const DeleteCliente = async (id) => {
+export const DeleteById = async (id) => {
   try {
-    const result = await del(`/clientes/${id}`);
-    return result;
+    const result = await del('/clientes',id);
+    return result
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar o pedido de exclusão",
+      errorMsg: "Erro ao processar a exclusão",
       options: null,
       data: null,
     };
@@ -32,8 +33,7 @@ export const DeleteCliente = async (id) => {
 
 export const GetById = async (id) => {
   try {
-    const result = await get(`/clientes/${id}`);
-    return result;
+    return await get('/clientes/'+id);
   } 
   catch (error) {
     return {
@@ -47,13 +47,12 @@ export const GetById = async (id) => {
 
 export const SendFormPost = async (data) => {
   try {
-    const result = await postData('/clientes', data);
-    return result;
+    return await postData('/clientes', data);
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: error,
+      errorMsg: error,
       options: null,
       data: null,
     };
@@ -62,13 +61,12 @@ export const SendFormPost = async (data) => {
 
 export const SendFormPut = async (data) => {
   try {
-    const result = await putData('/clientes', data);
-    return result;
+    return await putData('/clientes', data);
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: error,
+      errorMsg: error,
       options: null,
       data: null,
     };

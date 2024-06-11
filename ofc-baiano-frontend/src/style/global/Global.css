@@ -23,3 +23,7 @@ body
     background-size: cover;
 }
 
+.input-readonly-field{
+    background-color: bisque;
+}
+

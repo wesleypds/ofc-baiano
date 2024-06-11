@@ -62,7 +62,7 @@ public class ClienteServiceImpl implements ClienteService {
     private void saveValidation(Cliente cliente) throws MensagemValidacao {
         Cliente db = clienteRepository.findByCpf(cliente.getCpf());
         if (db != null && cliente.getId() == null) {
-            throw new MensagemValidacao(String.format("Este cliente %s já está cadastrado.", cliente.getNome()));
+            throw new MensagemValidacao(String.format("Este CPF %s já está cadastrado.", cliente.getCpf()));
         }
 
         if (cliente.getId() != null) {

@@ -27,7 +27,10 @@ import { GetById } from "../../services/usuario/usuarioService.js";
 const Usuario = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
+  
   const [isInvalidForm, setIsInvalidForm] = useState(false);
+  const [msgInvalidForm, setMsgInvalidForm] = useState("Houve um erro em validar seus dados!");
+
   const [titleButton, setTitleButton] = useState("Cadastrar");
   const [errors, setErrors] = useState({});
   
@@ -55,7 +58,7 @@ const Usuario = () => {
 
   const submitForm = ()=>{
     if(validate()){
-      HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, locationUrl, navigate)
+      HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, setMsgInvalidForm,locationUrl, navigate)
     }
   }
   const validate = () => {
@@ -208,7 +211,7 @@ const Usuario = () => {
 
         {isInvalidForm && (
             <Box className={`user-disabled text-light` }>
-                <center>Houve um erro em atualizar seus dados, verifique os campos</center>
+                <center>{msgInvalidForm}</center>
             </Box>
         )}
 
