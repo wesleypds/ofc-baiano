@@ -1,31 +1,39 @@
-import { get, del } from '../_baseService.js';
+
+import { get, del, postData, putData } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
     const result = await get('/funcionarios');
-    // console.log(result)
-    // return result
-
-    const rows = [
-      {id: 1, nome: "Tião", telefone: "(99) 99999-9999", email: "tiao@exemple.com", salario: 500.0, disponibilidade: "Sim"},
-      {id: 2, nome: "Mario", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
-      {id: 3, nome: "Luigi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500, disponibilidade: "Sim"},
-      {id: 4, nome: "Yoshi", telefone: "(99) 99999-9999", email: "XXXXXXXXXXXXXXXXX", salario: 500.00, disponibilidade: "Sim"},
-    ]
-
+    return result
+  } 
+  catch (error) {
     return {
-        success: true,
-        erroMsg: null,
-        options: null,
-        data: rows,
+      success: false,
+      errorMsg: "Erro ao processar",
+      options: null,
+      data: null,
     };
+  }
+};
 
+export const DeleteById = async (id) => {
+  try {
+    const result = await del('/funcionarios',id);
+    return result
+  } 
+  catch (error) {
     return {
-        success: false,
-        erroMsg: "login inválido",
-        options: null,
-        data: null,
+      success: false,
+      errorMsg: "Erro ao processar a exclusão",
+      options: null,
+      data: null,
     };
+  }
+};
+
+export const GetById = async (id) => {
+  try {
+    return await get('/funcionarios/'+id);
   } 
   catch (error) {
     return {
@@ -37,31 +45,28 @@ export const ListAll = async () => {
   }
 };
 
-export const DeleteFuncionario = async (id) => {
+export const SendFormPost = async (data) => {
   try {
-
-    const result = await del('/funcionario',id);
-    // console.log(result)
-    // return result
-
-    return {
-        success: true,
-        erroMsg: null,
-        options: null,
-        data: null
-    };
-
-    return {
-        success: false,
-        erroMsg: "login inválido",
-        options: null,
-        data: null,
-    };
+    return await postData('/funcionarios', data);
   } 
   catch (error) {
     return {
       success: false,
-      erroMsg: "Erro ao processar o login",
+      errorMsg: error,
+      options: null,
+      data: null,
+    };
+  }
+};
+
+export const SendFormPut = async (data) => {
+  try {
+    return await putData('/funcionarios', data);
+  } 
+  catch (error) {
+    return {
+      success: false,
+      errorMsg: error,
       options: null,
       data: null,
     };
