@@ -29,6 +29,7 @@ const Usuario = () => {
   const navigate = useNavigate();
   const [isInvalidForm, setIsInvalidForm] = useState(false);
   const [titleButton, setTitleButton] = useState("Cadastrar");
+  const [errors, setErrors] = useState({});
   
   const { id } = useParams();
   const [dataForm, setDataForm] = useState({
@@ -53,14 +54,42 @@ const Usuario = () => {
 
 
   const submitForm = ()=>{
-    if(isValidForm()){
+    if(validate()){
       HandleSubmitForm(id, "usuarios", dataForm, setIsInvalidForm, locationUrl, navigate)
     }
   }
+  const validate = () => {
+    const newErrors = {};
 
-  const isValidForm = ()=>{
-    return true
-  }
+    if (!dataForm.nome) {
+      newErrors.nome = 'Nome é obrigatório';
+    }
+
+    if (!dataForm.usuario) {
+      newErrors.usuario = 'Usuário é obrigatório';
+    }
+
+    if (!dataForm.senha) {
+      newErrors.senha = 'Senha é obrigatória';
+    } else if (dataForm.senha.length < 6) {
+      newErrors.senha = 'Senha deve ter no mínimo 6 caracteres';
+    }
+
+    if (!dataForm.tipo) {
+      newErrors.tipo = 'Tipo é obrigatório';
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!dataForm.email) {
+      newErrors.email = 'Email é obrigatório';
+    } else if (!emailPattern.test(dataForm.email)) {
+      newErrors.email = 'Email inválido';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
 
 
 
@@ -92,7 +121,6 @@ const Usuario = () => {
                 label="Nome Completo"
                 variant="standard"
                 required
-                error
                 value={dataForm.nome}
                 name="nome"
                 onChange={handleChange}
@@ -100,7 +128,9 @@ const Usuario = () => {
                 className="mb-3"
                 InputLabelProps={{
                   shrink: true,
-                }}
+                  }}
+                error={!!errors.nome}
+                helperText={errors.nome}
               />
 
               <TextField
@@ -115,6 +145,8 @@ const Usuario = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                error={!!errors.usuario}
+                helperText={errors.usuario}
               />
 
               <FormControl className="mb-3" fullWidth variant="standard">
@@ -135,7 +167,9 @@ const Usuario = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  error={!!errors.senha}
                 />
+                {errors.senha && <div style={{ color: 'red', fontSize: '12px' }}>{errors.senha}</div>}
               </FormControl>
 
               <FormControl fullWidth className="mb-3" variant="filled">
@@ -145,10 +179,12 @@ const Usuario = () => {
                   value={dataForm.tipo}
                   name="tipo"
                   onChange={handleChange}
+                  error={!!errors.tipo}
                 >
                   <MenuItem value="admin">Administrador</MenuItem>
                   <MenuItem value="funcionario">Funcionário</MenuItem>
                 </Select>
+                {errors.tipo && <div style={{ color: 'red', fontSize: '12px' }}>{errors.tipo}</div>}
               </FormControl>
 
               <TextField
@@ -163,6 +199,8 @@ const Usuario = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                error={!!errors.email}
+                helperText={errors.email}
               />
             </FormControl>
           </div>
