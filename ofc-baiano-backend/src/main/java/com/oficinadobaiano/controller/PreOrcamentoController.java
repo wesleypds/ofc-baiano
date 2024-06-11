@@ -88,6 +88,6 @@ public class PreOrcamentoController {
         response.setSuccess(true);
         response.setData(p);
         preOrcamentoService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

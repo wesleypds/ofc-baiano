@@ -87,6 +87,6 @@ public class ServicoController {
         response.setSuccess(true);
         response.setData(p);
         servicoService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

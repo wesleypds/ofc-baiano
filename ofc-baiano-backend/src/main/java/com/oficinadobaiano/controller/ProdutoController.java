@@ -87,6 +87,6 @@ public class ProdutoController {
         response.setSuccess(true);
         response.setData(p);
         produtoService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

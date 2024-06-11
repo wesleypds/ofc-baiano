@@ -86,6 +86,6 @@ public class OrcamentoController {
         response.setSuccess(true);
         response.setData(p);
         orcamentoService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
