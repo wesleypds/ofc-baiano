@@ -16,10 +16,13 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 
+
+import { GetById } from "../../services/servico/servicoService.js";
+
 const Servico = () => {
+  const { id } = useParams(); 
   const locationUrl = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams(); 
 
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {

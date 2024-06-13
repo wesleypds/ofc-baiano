@@ -5,7 +5,7 @@ import LayoutBase from '../../components/layout/LayoutBase.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
 import {RealFormatter} from '../../utils/DataGridBase/RealFormatter.jsx';
-import {DeleteProduto, ListAll} from "../../services/produto/produtoService.js"
+import {DeleteById, ListAll} from "../../services/produto/produtoService.js"
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 
 const Produtos = () => {
@@ -48,7 +48,7 @@ const Produtos = () => {
           baseColumns={columns}
           routeAddItem={"produto"}
           nameExport={"produtos"}
-          deleteMethod={async()=>{return await DeleteProduto()}}
+          deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
     </LayoutBase>
