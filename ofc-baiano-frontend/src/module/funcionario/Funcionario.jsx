@@ -49,29 +49,34 @@ const Funcionario = () => {
 
   const validate = () => {
     const newErrors = {};
-    // if (!dataForm.nome) {
-    //   newErrors.nome = 'Nome é obrigatório';
-    // }
-    // if (!dataForm.email) {
-    //   newErrors.email = 'E-mail é obrigatório';
-    // }
-    // if (!dataForm.telefone) {
-    //   newErrors.telefone = 'Telefone é obrigatório';
-    // }
-    // if (!dataForm.disponibilidade) {
-    //   newErrors.disponibilidade = 'Disponibilidade é obrigatório';
-    // }
+    if (!dataForm.nome) {
+      newErrors.nome = 'Nome é obrigatório';
+    } else if (dataForm.nome.length < 2 || dataForm.nome.length > 100) {
+      newErrors.nome = 'Nome deve ter entre 2 e 100 caracteres';
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!dataForm.email) {
+      newErrors.email = 'Email é obrigatório';
+    } else if (!emailPattern.test(dataForm.email)) {
+      newErrors.email = 'Email inválido';
+    }
+    const telefonePattern = /\(\d{2}\) \d{5}-\d{4}/;
+    if (!dataForm.telefone) {
+      newErrors.telefone = 'Telefone é obrigatório';
+    } else if (!telefonePattern.test(dataForm.telefone)) {
+      newErrors.telefone = 'Telefone deve estar no formato (99) 99999-9999';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
 
-  const handleRadioChange = (e) => {
-    setDataForm({
-      ...dataForm,
-      disponibilidade: e.target.value == 'sim',
-    });
-  };
+  // const handleRadioChange = (e) => {
+  //   setDataForm({
+  //     ...dataForm,
+  //     disponibilidade: e.target.value == 'sim',
+  //   });
+  // };
 
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
@@ -150,7 +155,7 @@ const Funcionario = () => {
                 />
               </FormControl> 
 
-              <FormControl fullWidth className="mb-3" variant="standard">
+              {/* <FormControl fullWidth className="mb-3" variant="standard">
                 <FormLabel>Disponibilidade</FormLabel>
                 <RadioGroup name="disponibilidade"
                 value={dataForm.disponibilidade ? 'sim' : 'nao'}
@@ -159,7 +164,7 @@ const Funcionario = () => {
                   <FormControlLabel control={<Radio />} value="sim" label="Sim"/>
                   <FormControlLabel control={<Radio />} value="nao" label="Não"/>
                 </RadioGroup>
-              </FormControl>
+              </FormControl> */}
 
             </FormControl>
           </div>        

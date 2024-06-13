@@ -34,7 +34,7 @@ const Produtos = () => {
     { key: 'codigo', name: 'Código' },
     { key: 'nome', name: 'Nome' },
     { key: 'quantidade', name: 'Quantidade' },
-    { key: 'valor', name: 'Valor unitário', renderCell: RealFormatter },
+    { key: 'valor', name: 'Valor unitário', renderCell: (item) => RealFormatter(item.row.valor)  },
   ]
 
   return (

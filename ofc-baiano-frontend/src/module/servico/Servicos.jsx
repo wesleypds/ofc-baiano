@@ -34,9 +34,9 @@ const Servicos = () => {
 
   var columns = [
     { key: 'id', name: 'ID' },
-    { key: 'nome', name: 'Tipo' },
+    { key: 'tipo', name: 'Nome' },
     { key: 'tempoEstimado', name: 'Tempo Estimado' },
-    { key: 'valor', name: 'Valor',renderCell: RealFormatter },
+    { key: 'valor', name: 'Valor',renderCell: (item) => RealFormatter(item.row.valor) },
     { key: 'complexidade', name: 'Complexidade' },
   ]
 

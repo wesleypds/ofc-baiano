@@ -26,7 +26,7 @@ const Funcionarios = () => {
 
     (async() =>{
       var resposta = await ListAll();
-      console.log(resposta.data);
+      //console.log(resposta.data);
       setRows(resposta.data);
       setLoading(false)
     })();
@@ -38,8 +38,8 @@ const Funcionarios = () => {
     { key: 'nome', name: 'Nome' },
     { key: 'telefone', name: 'telefone' },
     { key: 'email', name: 'Email'},
-    { key: 'salario', name: 'Salário', formatter: ({ value }) => <RealFormatter value={value}/>},
-    { key: 'disponibilidade', name: 'Disponível', formatter: ({ value }) => (value ? 'Sim' : 'Não')}
+    { key: 'salario', name: 'Salário', renderCell: (item) => RealFormatter(item.row.salario)  },
+    { key: 'disponibilidade', name: 'Disponível', renderCell: (item) => item.row.disponibilidade ? 'Sim' : 'Não'}
   ]
 
   return (
