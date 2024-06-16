@@ -5,7 +5,8 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import { ListAll, DeleteById } from "../../services/cliente/clienteService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-
+import { IconButton } from '@mui/material';
+import { CarOutlined} from '@ant-design/icons';
 
 const Clientes = () => {
   
@@ -27,13 +28,25 @@ const Clientes = () => {
   }, [navigate, locationUrl.state.token]);
 
   var columns = [
-    { key: "id", name: "ID" },
+    { key: "id", name: "ID", width: 40 },
     { key: "cpf", name: "CPF"},
     { key: "nome", name: "Nome" },
     { key: "endereco", name: "Endereço" },
     { key: "telefone", name: "Telefone" },
     { key: "email", name: "Email" },
   ];
+
+  const addCarInClient = (id) => {
+    const token = locationUrl.state.token;
+    const userInfo = locationUrl.state.userInfo;
+    navigate(`/veiculo-cliente/${id}`, { state: { token, userInfo } });
+  };
+
+  const renderAddCarButton = (id) => (
+    <IconButton onClick={() => addCarInClient(id)}>
+      <CarOutlined style={{ color: "#3543c4" }} />
+    </IconButton>
+  );
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
@@ -47,6 +60,7 @@ const Clientes = () => {
           routeAddItem={"cliente"}
           nameExport={"clientes"}
           deleteMethod={async(id)=>{return await DeleteById(id)}}
+          additionalButton={renderAddCarButton}
         />
       )}
     </LayoutBase>
