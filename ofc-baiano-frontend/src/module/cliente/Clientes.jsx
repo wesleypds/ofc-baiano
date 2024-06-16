@@ -39,7 +39,7 @@ const Clientes = () => {
   const addCarInClient = (id) => {
     const token = locationUrl.state.token;
     const userInfo = locationUrl.state.userInfo;
-    navigate(`/veiculo-cliente/${id}`, { state: { token, userInfo } });
+    navigate(`/veiculos-cliente/${id}`, { state: { token, userInfo } });
   };
 
   const renderAddCarButton = (id) => (
