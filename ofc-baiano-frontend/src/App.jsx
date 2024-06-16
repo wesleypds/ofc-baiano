@@ -10,6 +10,8 @@ import Veiculos from "./module/veiculo/Veiculos.jsx"
 import Veiculo from "./module/veiculo/Veiculo.jsx"
 import Clientes from "./module/cliente/Clientes.jsx"
 import Cliente from "./module/cliente/Cliente.jsx"
+import PreOrcamentos from "./module/preorcamento/PreOrcamentos.jsx"
+import PreOrcamento from "./module/preorcamento/PreOrcamento.jsx"
 
 import Servicos from "./module/servico/Servicos.jsx"
 import Servico from "./module/servico/Servico.jsx"
@@ -48,6 +50,11 @@ function App() {
           <Route path="/veiculos" element={<Veiculos/>}/>
           <Route path="/veiculo" element={<Veiculo/>}/>
           <Route path="/veiculo/:id" element={<Veiculo />} />
+
+          <Route path="/preorcamentos" element={<PreOrcamentos/>}/>
+          <Route path="/preorcamento" element={<PreOrcamento/>}/>
+          <Route path="/preorcamento/:id" element={<PreOrcamento/>}/>
+          
 
         </Routes>
       </BrowserRouter>

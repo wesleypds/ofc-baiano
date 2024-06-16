@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
-import { ListAll, DeleteById } from "../../services/cliente/clienteService.js";
+import { ListAll, DeleteById } from "../../services/preorcamento/preOrcamentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
 
 
-const Clientes = () => {
+const PreOrcamentos = () => {
   
   const locationUrl = useLocation();
   const navigate = useNavigate();
@@ -28,24 +28,22 @@ const Clientes = () => {
 
   var columns = [
     { key: "id", name: "ID" },
-    { key: "cpf", name: "CPF"},
-    { key: "nome", name: "Nome" },
-    { key: "endereco", name: "Endereço" },
-    { key: "telefone", name: "Telefone" },
-    { key: "email", name: "Email" },
+    { key: "escolha", name: "Tipo"},
+    { key: "cliente", name: "Cliente"},
+    { key: "problema", name: "Problema" },
   ];
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       {loading ? (
-        <LoadingCircular text={"Carregando clientes..."} />
+        <LoadingCircular text={"Carregando pré-Orçamentos..."} />
       ) : (
         <DataGridBase
-          title={"Clientes Cadastrados"}
+          title={"Pré-Orçamentos Cadastrados"}
           data={rows}
           baseColumns={columns}
-          routeAddItem={"cliente"}
-          nameExport={"clientes"}
+          routeAddItem={"preorcamento"}
+          nameExport={"preorcamentos"}
           deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
@@ -53,4 +51,4 @@ const Clientes = () => {
   );
 };
 
-export default Clientes;
+export default PreOrcamentos;
