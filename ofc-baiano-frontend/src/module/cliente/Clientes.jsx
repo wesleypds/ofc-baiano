@@ -36,18 +36,6 @@ const Clientes = () => {
     { key: "email", name: "Email" },
   ];
 
-  const addCarInClient = (id) => {
-    const token = locationUrl.state.token;
-    const userInfo = locationUrl.state.userInfo;
-    navigate(`/veiculos-cliente/${id}`, { state: { token, userInfo } });
-  };
-
-  const renderAddCarButton = (id) => (
-    <IconButton onClick={() => addCarInClient(id)}>
-      <CarOutlined style={{ color: "#3543c4" }} />
-    </IconButton>
-  );
-
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       {loading ? (
@@ -60,7 +48,6 @@ const Clientes = () => {
           routeAddItem={"cliente"}
           nameExport={"clientes"}
           deleteMethod={async(id)=>{return await DeleteById(id)}}
-          additionalButton={renderAddCarButton}
         />
       )}
     </LayoutBase>

@@ -22,6 +22,7 @@ const loadModulePut = async (action) => {
 export const HandleSubmitForm = (id, routePage, dataForm, setIsInvalidForm, setMsgInvalidForm,locationUrl, navigate,) => {
     if (id) {
       (async () => {
+        console.log("sqad")
         const SendFormPut = await loadModulePut(routePage.slice(0, -1));
 
         var response = await SendFormPut(dataForm);

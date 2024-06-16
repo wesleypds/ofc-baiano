@@ -12,6 +12,8 @@ import Clientes from "./module/cliente/Clientes.jsx"
 import Cliente from "./module/cliente/Cliente.jsx"
 import PreOrcamentos from "./module/preorcamento/PreOrcamentos.jsx"
 import PreOrcamento from "./module/preorcamento/PreOrcamento.jsx"
+import Orcamentos from "./module/orcamento/Orcamentos.jsx"
+import Orcamento from "./module/orcamento/Orcamento.jsx"
 
 import Servicos from "./module/servico/Servicos.jsx"
 import Servico from "./module/servico/Servico.jsx"
@@ -54,6 +56,10 @@ function App() {
           <Route path="/preorcamentos" element={<PreOrcamentos/>}/>
           <Route path="/preorcamento" element={<PreOrcamento/>}/>
           <Route path="/preorcamento/:id" element={<PreOrcamento/>}/>
+
+          <Route path="/orcamentos" element={<Orcamentos/>}/>
+          <Route path="/orcamento" element={<Orcamento/>}/>
+          <Route path="/orcamento/:id" element={<Orcamento/>}/>
           
 
         </Routes>

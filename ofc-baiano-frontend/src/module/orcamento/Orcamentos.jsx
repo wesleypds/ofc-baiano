@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate,useLocation } from "react-router-dom";
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
-import { ListAll, DeleteById } from "../../services/preorcamento/preOrcamentoService.js";
+import { ListAll, DeleteById } from "../../services/orcamento/orcamentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
 
 
-const PreOrcamentos = () => {
+const Orcamentos = () => {
   
   const locationUrl = useLocation();
   const navigate = useNavigate();
@@ -29,22 +29,22 @@ const PreOrcamentos = () => {
   var columns = [
     { key: "id", name: "ID" },
     { key: "escolha", name: "Tipo"},
-    { key: "cliente", name: "Cliente", renderCell: ({ row }) => row.cliente?.nome || '',},
-    { key: "placa", name: "Placa", renderCell: ({ row }) => row.cliente.veiculos[0].placaVeiculo || '',},
-    { key: "ano", name: "Ano", renderCell: ({ row }) => row.cliente.veiculos[0].anoVeiculo || '',},
+    { key: "cliente", name: "Cliente"},
+    { key: "problema", name: "Problema" },
   ];
+
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       {loading ? (
-        <LoadingCircular text={"Carregando pré-Orçamentos..."} />
+        <LoadingCircular text={"Carregando Orçamentos..."} />
       ) : (
         <DataGridBase
-          title={"Pré-Orçamentos Cadastrados"}
+          title={"Orçamentos Cadastrados"}
           data={rows}
           baseColumns={columns}
-          routeAddItem={"preorcamento"}
-          nameExport={"preorcamentos"}
+          routeAddItem={"orcamento"}
+          nameExport={"orcamentos"}
           deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
@@ -52,4 +52,4 @@ const PreOrcamentos = () => {
   );
 };
 
-export default PreOrcamentos;
+export default Orcamentos;
