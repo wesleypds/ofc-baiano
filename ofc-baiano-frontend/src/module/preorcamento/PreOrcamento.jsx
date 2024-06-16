@@ -62,6 +62,7 @@ const PreOrcamento = () => {
 
         var dados = 
         {
+          "id": dataForm.id,
           "escolha": dataForm.escolha,
             "cliente": {
                 "id": dataForm.cliente,
@@ -77,7 +78,7 @@ const PreOrcamento = () => {
             },
             "problema": dataForm.problema
         }
-        
+
       HandleSubmitForm(
         id,
         "preorcamentos",
@@ -144,8 +145,8 @@ const PreOrcamento = () => {
       setTitleButton("Atualizar");
       (async () => {
         let dados = (await GetById(id)).data
-        console.log(dados)
         setDataForm({
+          id: dados.id,
           cliente: dados.cliente.id,
           veiculo: dados.cliente.veiculos[0].veiculo.id,
           escolha: dados.escolha,

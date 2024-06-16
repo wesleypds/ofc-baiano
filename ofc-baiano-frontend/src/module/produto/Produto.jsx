@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 
-import { GetById } from "../../services/funcionario/funcionarioService.js";
+import { GetById } from "../../services/produto/produtoService.js";
 import {HandleSubmitForm} from "../../utils/Form/FormUtils.js"
 
 const Produto = () => {
