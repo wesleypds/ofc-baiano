@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-function DataGridBase({title, data, baseColumns, routeAddItem, nameExport, deleteMethod}) {
+function DataGridBase({title, data, baseColumns, routeAddItem, nameExport, deleteMethod, additionalButton}) {
 
   const [dataRows, setDataRows] = useState(data);
 
@@ -91,11 +91,14 @@ function DataGridBase({title, data, baseColumns, routeAddItem, nameExport, delet
       key: 'editar',
       name: 'Editar',
       renderCell: ({ row }) => (
-        <IconButton onClick={() => handleEdit(row.id)}>
-          <EditFilled style={{ color: "#3543c4" }} />
-        </IconButton>
+        <div>
+          <IconButton onClick={() => handleEdit(row.id)}>
+            <EditFilled style={{ color: "#3543c4" }} />
+          </IconButton>
+          {additionalButton && additionalButton(row.id)}
+        </div>
       ),
-      width: 80,
+      width: 100,
     },
     ...baseColumns,
     {

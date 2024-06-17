@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
-import { ListAll, DeleteById } from "../../services/cliente/clienteService.js";
+import { ListAll, DeleteById } from "../../services/orcamento/orcamentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-import { IconButton } from '@mui/material';
-import { CarOutlined} from '@ant-design/icons';
 
-const Clientes = () => {
+
+const Orcamentos = () => {
   
   const locationUrl = useLocation();
   const navigate = useNavigate();
@@ -28,25 +27,24 @@ const Clientes = () => {
   }, [navigate, locationUrl.state.token]);
 
   var columns = [
-    { key: "id", name: "ID", width: 40 },
-    { key: "cpf", name: "CPF"},
-    { key: "nome", name: "Nome" },
-    { key: "endereco", name: "Endereço" },
-    { key: "telefone", name: "Telefone" },
-    { key: "email", name: "Email" },
+    { key: "id", name: "ID" },
+    { key: "escolha", name: "Tipo"},
+    { key: "cliente", name: "Cliente"},
+    { key: "problema", name: "Problema" },
   ];
+
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       {loading ? (
-        <LoadingCircular text={"Carregando clientes..."} />
+        <LoadingCircular text={"Carregando Orçamentos..."} />
       ) : (
         <DataGridBase
-          title={"Clientes Cadastrados"}
+          title={"Orçamentos Cadastrados"}
           data={rows}
           baseColumns={columns}
-          routeAddItem={"cliente"}
-          nameExport={"clientes"}
+          routeAddItem={"orcamento"}
+          nameExport={"orcamentos"}
           deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
@@ -54,4 +52,4 @@ const Clientes = () => {
   );
 };
 
-export default Clientes;
+export default Orcamentos;

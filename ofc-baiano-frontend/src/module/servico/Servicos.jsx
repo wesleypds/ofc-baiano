@@ -6,7 +6,7 @@ import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
 import { Button } from '@mui/material';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ListAll, DeleteServico } from '../../services/servico/servicoService.js';
+import { ListAll, DeleteById } from '../../services/servico/servicoService.js';
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import {RealFormatter} from '../../utils/DataGridBase/RealFormatter.jsx';
 
@@ -34,9 +34,9 @@ const Servicos = () => {
 
   var columns = [
     { key: 'id', name: 'ID' },
-    { key: 'nome', name: 'Tipo' },
+    { key: 'tipo', name: 'Nome' },
     { key: 'tempoEstimado', name: 'Tempo Estimado' },
-    { key: 'valor', name: 'Valor',renderCell: RealFormatter },
+    { key: 'valor', name: 'Valor',renderCell: (item) => RealFormatter(item.row.valor) },
     { key: 'complexidade', name: 'Complexidade' },
   ]
 
@@ -51,7 +51,7 @@ const Servicos = () => {
           baseColumns={columns}
           routeAddItem={"servico"}
           nameExport={"servicos"}
-          deleteMethod={async()=>{return await DeleteServico()}}
+          deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
     </LayoutBase>

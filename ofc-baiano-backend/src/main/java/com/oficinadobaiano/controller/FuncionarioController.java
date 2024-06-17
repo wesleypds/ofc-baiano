@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Funcionario;
 import com.oficinadobaiano.model.dto.Corpo;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.FuncionarioService;
 
 @RestController
@@ -80,13 +81,13 @@ public class FuncionarioController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) throws MensagemValidacao {
         Optional<Funcionario> funcionario = funcionarioService.findById(id);
         Funcionario f = funcionario.get();
         Corpo response = new Corpo<>();
         response.setSuccess(true);
         response.setData(f);
         funcionarioService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

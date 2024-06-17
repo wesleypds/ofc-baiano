@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ListAll, DeleteFuncionario } from "../../services/funcionario/funcionarioService.js";
+import { ListAll, DeleteById } from "../../services/funcionario/funcionarioService.js";
 import { RealFormatter } from '../../utils/DataGridBase/RealFormatter.jsx';
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
@@ -26,6 +26,7 @@ const Funcionarios = () => {
 
     (async() =>{
       var resposta = await ListAll();
+      //console.log(resposta.data);
       setRows(resposta.data);
       setLoading(false)
     })();
@@ -37,8 +38,8 @@ const Funcionarios = () => {
     { key: 'nome', name: 'Nome' },
     { key: 'telefone', name: 'telefone' },
     { key: 'email', name: 'Email'},
-    { key: 'salario', name: 'Salário', renderCell: RealFormatter},
-    { key: 'disponibilidade', name: 'Disponível'}
+    { key: 'salario', name: 'Salário', renderCell: (item) => RealFormatter(item.row.salario)  },
+    { key: 'disponibilidade', name: 'Disponível', renderCell: (item) => item.row.disponibilidade ? 'Sim' : 'Não'}
   ]
 
   return (
@@ -52,7 +53,7 @@ const Funcionarios = () => {
           baseColumns={columns}
           routeAddItem={"funcionario"}
           nameExport={"funcionarios"}
-          deleteMethod={async()=>{return await DeleteFuncionario()}}
+          deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
     </LayoutBase>

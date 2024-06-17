@@ -1,9 +1,9 @@
 
-export const RealFormatter = ({row}) => {
+export const RealFormatter = (valor) => {
     const formattedValue = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-    }).format(row.valor);
+    }).format(valor);
     return <span>{formattedValue}</span>;
 };
 

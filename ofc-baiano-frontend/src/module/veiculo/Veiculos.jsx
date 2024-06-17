@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx"
-import { Button } from '@mui/material';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-import {RealFormatter} from '../../utils/DataGridBase/RealFormatter.jsx';
-import {DeleteVeiculo, ListAll} from "../../services/veiculo/veiculoService.js"
+import {DeleteById, ListAll} from "../../services/veiculo/veiculoService.js"
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 
 const Usuario = () => {
@@ -51,7 +49,7 @@ const Usuario = () => {
           baseColumns={columns}
           routeAddItem={"veiculo"}
           nameExport={"veiculos"}
-          deleteMethod={async()=>{return await DeleteVeiculo()}}
+          deleteMethod={async(id)=>{return await DeleteById(id)}}
         />
       )}
     </LayoutBase>

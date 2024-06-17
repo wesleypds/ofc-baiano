@@ -3,7 +3,7 @@ import { get, del, postData, putData } from '../_baseService.js';
 
 export const ListAll = async () => {
   try {
-    const result = await get('/funcionarios');
+    const result = await get('/orcamentos');
     return result
   } 
   catch (error) {
@@ -18,7 +18,7 @@ export const ListAll = async () => {
 
 export const DeleteById = async (id) => {
   try {
-    const result = await del('/funcionarios',id);
+    const result = await del('/orcamentos',id);
     return result
   } 
   catch (error) {
@@ -33,7 +33,7 @@ export const DeleteById = async (id) => {
 
 export const GetById = async (id) => {
   try {
-    return await get('/funcionarios/'+id);
+    return await get('/orcamentos/'+id);
   } 
   catch (error) {
     return {
@@ -47,7 +47,7 @@ export const GetById = async (id) => {
 
 export const SendFormPost = async (data) => {
   try {
-    return await postData('/funcionarios', data);
+    return await postData('/orcamentos', data);
   } 
   catch (error) {
     return {
@@ -61,7 +61,7 @@ export const SendFormPost = async (data) => {
 
 export const SendFormPut = async (data) => {
   try {
-    return await putData('/funcionarios', data);
+    return await putData('/orcamentos', data);
   } 
   catch (error) {
     return {

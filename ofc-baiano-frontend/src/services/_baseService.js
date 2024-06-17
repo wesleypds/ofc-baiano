@@ -43,6 +43,7 @@ export const postData = async (url, data) => {
 };
 
 export const putData = async (url, data) => {
+  console.log(data)
   return fetchData(url, {
     method: 'PUT',
     headers,
