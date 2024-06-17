@@ -139,7 +139,6 @@ const PreOrcamento = () => {
       setVeiculoList((await VeiculoListAll()).data);
     })();
 
-
     if (id) {
       setIsReadOnly(true);
       setTitleButton("Atualizar");
