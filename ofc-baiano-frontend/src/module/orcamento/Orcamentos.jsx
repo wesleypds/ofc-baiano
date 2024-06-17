@@ -14,6 +14,13 @@ const Orcamentos = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  var columns = [
+    { key: "id", name: "ID" },
+    { key: "escolha", name: "Tipo", renderCell: ({row}) => row.preOrcamento.escolha },
+    { key: "cliente", name: "Cliente", renderCell: ({row}) => row.preOrcamento.cliente.nome },
+    { key: "problema", name: "Problema", renderCell: ({row}) => row.preOrcamento.problema },
+  ];
+
   useEffect(() => {
     if (locationUrl.state.token !== "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
@@ -21,17 +28,12 @@ const Orcamentos = () => {
 
     (async () => {
       var resposta = await ListAll();
+      // console.log(resposta);
+      // setRows(transformedData);
       setRows(resposta.data);
       setLoading(false);
     })();
   }, [navigate, locationUrl.state.token]);
-
-  var columns = [
-    { key: "id", name: "ID" },
-    { key: "escolha", name: "Tipo"},
-    { key: "cliente", name: "Cliente"},
-    { key: "problema", name: "Problema" },
-  ];
 
 
   return (
