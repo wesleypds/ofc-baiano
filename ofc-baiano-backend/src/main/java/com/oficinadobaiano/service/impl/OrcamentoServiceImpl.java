@@ -39,6 +39,11 @@ public class OrcamentoServiceImpl implements OrcamentoService {
         if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
             orcamento.setProblemaCliente(preOrcamento.getProblema());
         }
+
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
+            orcamento.setAprovado(true);
+        }
+        
         orcamento.setProblemaMecanico(null);
         orcamento.setValor(calculaValorOrcamento(orcamento));
         return orcamentoRepository.save(orcamento);

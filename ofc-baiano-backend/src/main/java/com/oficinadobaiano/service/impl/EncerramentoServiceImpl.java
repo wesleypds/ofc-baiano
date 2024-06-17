@@ -16,7 +16,7 @@ public class EncerramentoServiceImpl implements EncerramentoService {
 
     @Override
     public Encerramento save(Encerramento encerramento) {
-        
+        calculaValorFinal(encerramento);
         return encerramentoRepository.save(encerramento);
     }
 
@@ -38,5 +38,9 @@ public class EncerramentoServiceImpl implements EncerramentoService {
     @Override
     public void remove(Long id) {
         encerramentoRepository.deleteById(id);
+    }
+
+    private void calculaValorFinal(Encerramento entity) {
+        entity.setValorFinal(entity.getAgendamento().getOrcamento().getValor());
     }
 }
