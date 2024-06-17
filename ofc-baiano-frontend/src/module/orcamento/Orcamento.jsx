@@ -74,36 +74,9 @@ const Orcamento = () => {
   const validate = () => {
     const newErrors = {};
 
-    // if (!dataForm.nome) {
-    //   newErrors.nome = 'Nome é obrigatório';
-    // } else if (dataForm.nome.length < 2 || dataForm.nome.length > 100) {
-    //   newErrors.nome = 'Nome deve ter entre 2 e 100 caracteres';
-    // }
-
-    // if (!dataForm.endereco) {
-    //   newErrors.endereco = 'Endereço é obrigatório';
-    // }
-
-    // const telefonePattern = /\(\d{2}\) \d{5}-\d{4}/;
-    // if (!dataForm.telefone) {
-    //   newErrors.telefone = 'Telefone é obrigatório';
-    // } else if (!telefonePattern.test(dataForm.telefone)) {
-    //   newErrors.telefone = 'Telefone deve estar no formato (99) 99999-9999';
-    // }
-
-    // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!dataForm.email) {
-    //   newErrors.email = 'Email é obrigatório';
-    // } else if (!emailPattern.test(dataForm.email)) {
-    //   newErrors.email = 'Email inválido';
-    // }
-
-    // const cpfPattern = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
-    // if (!dataForm.cpf) {
-    //   newErrors.cpf = 'CPF é obrigatório';
-    // } else if (!cpfPattern.test(dataForm.cpf)) {
-    //   newErrors.cpf = 'CPF deve estar no formato 000.000.000-00';
-    // }
+    if (!dataForm.preOrcamento) {
+      newErrors.preOrcamento = 'Pré-Orçamento é obrigatório';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -154,6 +127,7 @@ const Orcamento = () => {
                   fullWidth
                   required
                   error={!!errors.preOrcamento}
+                  helperText={errors.preOrcamento}
                   className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
                 >
                   <InputLabel shrink>Pré-Orçamento</InputLabel>

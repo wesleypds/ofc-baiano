@@ -94,36 +94,28 @@ const PreOrcamento = () => {
   const validate = () => {
     const newErrors = {};
 
-    // if (!dataForm.nome) {
-    //   newErrors.nome = "Nome é obrigatório";
-    // } else if (dataForm.nome.length < 2 || dataForm.nome.length > 100) {
-    //   newErrors.nome = "Nome deve ter entre 2 e 100 caracteres";
-    // }
-
-    // if (!dataForm.endereco) {
-    //   newErrors.endereco = "Endereço é obrigatório";
-    // }
-
-    // const telefonePattern = /\(\d{2}\) \d{5}-\d{4}/;
-    // if (!dataForm.telefone) {
-    //   newErrors.telefone = "Telefone é obrigatório";
-    // } else if (!telefonePattern.test(dataForm.telefone)) {
-    //   newErrors.telefone = "Telefone deve estar no formato (99) 99999-9999";
-    // }
-
-    // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!dataForm.email) {
-    //   newErrors.email = "Email é obrigatório";
-    // } else if (!emailPattern.test(dataForm.email)) {
-    //   newErrors.email = "Email inválido";
-    // }
-
-    // const cpfPattern = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
-    // if (!dataForm.cpf) {
-    //   newErrors.cpf = "CPF é obrigatório";
-    // } else if (!cpfPattern.test(dataForm.cpf)) {
-    //   newErrors.cpf = "CPF deve estar no formato 000.000.000-00";
-    // }
+    if (!dataForm.cliente) {
+      newErrors.cliente = "Cliente é obrigatório";
+    }
+    if (!dataForm.veiculo) {
+      newErrors.veiculo = "Veículo é obrigatório";
+    }
+    if (!dataForm.escolha) {
+      newErrors.escolha = "Escolha do cliente é obrigatória";
+    }
+    if (!dataForm.anoVeiculo) {
+      newErrors.anoVeiculo = "Ano do veículo é obrigatório";
+    } else if (!/^\d{4}$/.test(dataForm.anoVeiculo)) {
+      newErrors.anoVeiculo = "Ano do veículo deve conter 4 dígitos";
+    }
+    if (!dataForm.placaVeiculo) {
+      newErrors.placaVeiculo = "Placa do veículo é obrigatória";
+    } else if (!/^[A-Z]{3}-\d{4}$/.test(dataForm.placaVeiculo) && !/^[A-Z]{3}\d[A-Z]\d{2}$/.test(dataForm.placaVeiculo)) {
+      newErrors.placaVeiculo = "Placa do veículo deve estar no formato AAA-9999 ou ABC1D23";
+    }
+    if (!dataForm.problema) {
+      newErrors.problema = "Descrição do problema é obrigatória";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -173,6 +165,7 @@ const PreOrcamento = () => {
                   fullWidth
                   required
                   error={!!errors.cliente}
+                  helperText={errors.cliente}
                   className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
                 >
                   <InputLabel shrink>Cliente</InputLabel>
@@ -201,6 +194,7 @@ const PreOrcamento = () => {
                 fullWidth
                 required
                 error={!!errors.escolha}
+                helperText={errors.escolha}
                 className={`mb-3`}
               >
                 <InputLabel shrink>Escolha do cliente</InputLabel>
@@ -229,6 +223,7 @@ const PreOrcamento = () => {
                 fullWidth
                 required
                 error={!!errors.veiculo}
+                helperText={errors.veiculo}
                 className={`mb-3`}
               >
                 <InputLabel shrink>Veículo</InputLabel>
@@ -239,6 +234,8 @@ const PreOrcamento = () => {
                   onChange={handleChange}
                   name="veiculo"
                   displayEmpty
+                  error={!!errors.veiculo}
+                  helperText={errors.veiculo}
                 >
                   <MenuItem value="">
                     <em>Escolha um veículo</em>
@@ -264,8 +261,8 @@ const PreOrcamento = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                // error={!!errors.cpf}
-                // helperText={errors.cpf}
+                error={!!errors.anoVeiculo}
+                helperText={errors.anoVeiculo}
               />
 
               <TextField
@@ -281,8 +278,8 @@ const PreOrcamento = () => {
                   shrink: true,
                 }}
 
-                // error={!!errors.cpf}
-                // helperText={errors.cpf}
+                error={!!errors.placaVeiculo}
+                helperText={errors.placaVeiculo}
               />
 
               <TextField
@@ -299,8 +296,8 @@ const PreOrcamento = () => {
                   }}
                   multiline
                   rows={4}  
-                  // error={!!errors.cpf}
-                  // helperText={errors.cpf}
+                  error={!!errors.problema}
+                  helperText={errors.problema}
                 />
 
             </FormControl>
