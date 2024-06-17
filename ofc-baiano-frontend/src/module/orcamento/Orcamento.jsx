@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate , useLocation, useParams } from "react-router-dom";
 import { TextField, FormControl, Box, Select, MenuItem, InputLabel, FormHelperText, InputAdornment } from "@mui/material";
+import { parseISO, format } from 'date-fns';
 
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
@@ -92,11 +93,11 @@ const Orcamento = () => {
       setTitleButton("Atualizar");
       (async () => {
         var dados = (await GetById(id)).data
-        console.log(dados)
+
         setDataForm({
           id: dados.id,
           preOrcamento: dados.preOrcamento.id,
-          dataOrcamento: dados.dataOrcamento,
+          dataOrcamento: format(parseISO(dados.dataOrcamento), 'yyyy-MM-dd'),
           descontos: dados.descontos,
           produtoOrcamentos: dados.produtoOrcamentos,
           servicos: dados.servicos,
@@ -176,11 +177,14 @@ const Orcamento = () => {
                   type="number"
                   name="descontos"
                   variant="standard"
-                  value={dataForm.desconto}
+                  value={dataForm.descontos}
                   onChange={handleChange}
                   InputProps={{
                     endAdornment: <InputAdornment position="end">%</InputAdornment>,
                     readOnly: isReadOnly,
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
                   error={!!errors.descontos}
                   helperText={errors.descontos}
