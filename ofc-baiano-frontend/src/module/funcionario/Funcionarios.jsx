@@ -26,7 +26,6 @@ const Funcionarios = () => {
 
     (async() =>{
       var resposta = await ListAll();
-      //console.log(resposta.data);
       setRows(resposta.data);
       setLoading(false)
     })();
