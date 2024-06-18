@@ -74,7 +74,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
     private void saveValidation(Orcamento orcamento) throws MensagemValidacao {
         Orcamento db = orcamentoRepository.findByPreOrcamento(orcamento.getPreOrcamento().getId());
-        if (db != null) {
+        if (db != null && db.getFinalizado().equals(false)) {
             throw new MensagemValidacao("Já existe um orçamento para este cliente.");
         }
     }
