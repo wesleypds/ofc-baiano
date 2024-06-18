@@ -54,4 +54,6 @@ public class Orcamento {
     private String problemaMecanico;
 
     private Boolean aprovado;
+
+    private Boolean finalizado = false;
 }

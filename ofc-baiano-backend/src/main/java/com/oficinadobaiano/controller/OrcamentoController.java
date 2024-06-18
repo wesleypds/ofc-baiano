@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Orcamento;
 import com.oficinadobaiano.model.dto.Corpo;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.OrcamentoService;
 
 @RestController
@@ -58,7 +59,7 @@ public class OrcamentoController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping
-    public ResponseEntity<Corpo> create(@RequestBody Orcamento orcamento){
+    public ResponseEntity<Corpo> create(@RequestBody Orcamento orcamento) throws MensagemValidacao{
         orcamento.setId(null);
         Orcamento p = orcamentoService.save(orcamento);
         Corpo response = new Corpo<>();

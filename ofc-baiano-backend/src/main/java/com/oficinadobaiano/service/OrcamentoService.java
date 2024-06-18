@@ -4,9 +4,10 @@ import java.util.Optional;
 import java.util.List;
 
 import com.oficinadobaiano.model.Orcamento;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 
 public interface OrcamentoService {
-    Orcamento save(Orcamento orcamento);
+    Orcamento save(Orcamento orcamento) throws MensagemValidacao;
 
     List<Orcamento> findAll();
 

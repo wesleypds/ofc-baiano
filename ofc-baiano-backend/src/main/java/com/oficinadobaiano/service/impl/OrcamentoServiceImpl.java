@@ -12,6 +12,7 @@ import com.oficinadobaiano.model.OrcamentoServico;
 import com.oficinadobaiano.model.PreOrcamento;
 import com.oficinadobaiano.model.Produto;
 import com.oficinadobaiano.model.Servico;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.repository.OrcamentoRepository;
 import com.oficinadobaiano.repository.PreOrcamentoRepository;
 import com.oficinadobaiano.repository.ProdutoRepository;
@@ -33,7 +34,8 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     private ProdutoRepository produtoRepository;
 
     @Override
-    public Orcamento save(Orcamento orcamento) {
+    public Orcamento save(Orcamento orcamento) throws MensagemValidacao {
+        saveValidation(orcamento);
         Optional<PreOrcamento> db = preOrcamentoRepository.findById(orcamento.getPreOrcamento().getId());
         PreOrcamento preOrcamento = db.get();
         if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
@@ -68,6 +70,13 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     @Override
     public void remove(Long id) {
         orcamentoRepository.deleteById(id);
+    }
+
+    private void saveValidation(Orcamento orcamento) throws MensagemValidacao {
+        Orcamento db = orcamentoRepository.findByPreOrcamento(orcamento.getPreOrcamento().getId());
+        if (db != null && db.getFinalizado().equals(false)) {
+            throw new MensagemValidacao("Já existe um orçamento para este cliente.");
+        }
     }
 
     private Double calculaValorOrcamento(Orcamento orcamento) {
