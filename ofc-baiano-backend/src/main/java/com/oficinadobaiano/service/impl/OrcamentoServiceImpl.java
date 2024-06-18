@@ -36,17 +36,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
     @Override
     public Orcamento save(Orcamento orcamento) throws MensagemValidacao {
         saveValidation(orcamento);
-        Optional<PreOrcamento> db = preOrcamentoRepository.findById(orcamento.getPreOrcamento().getId());
-        PreOrcamento preOrcamento = db.get();
-        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
-            orcamento.setProblemaCliente(preOrcamento.getProblema());
-        }
-
-        if (preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
-            orcamento.setAprovado(true);
-        }
-        
-        orcamento.setProblemaMecanico(null);
+        trataEscolhaCliente(orcamento);
         orcamento.setValor(calculaValorOrcamento(orcamento));
         return orcamentoRepository.save(orcamento);
     }
@@ -72,8 +62,21 @@ public class OrcamentoServiceImpl implements OrcamentoService {
         orcamentoRepository.deleteById(id);
     }
 
+    private void trataEscolhaCliente(Orcamento orcamento) {
+        Optional<PreOrcamento> db = preOrcamentoRepository.findById(orcamento.getPreOrcamento().getId());
+        PreOrcamento preOrcamento = db.get();
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.ORCAMENTO_E_SERVICO) || preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
+            orcamento.setProblemaCliente(preOrcamento.getProblema());
+        }
+
+        if (preOrcamento.getEscolha().equals(EscolhaCliente.SERVICO)) {
+            orcamento.setAprovado(true);
+            orcamento.setProblemaMecanico(null);
+        }
+    }
+
     private void saveValidation(Orcamento orcamento) throws MensagemValidacao {
-        Orcamento db = orcamentoRepository.findByPreOrcamento(orcamento.getPreOrcamento().getId());
+        Orcamento db = orcamentoRepository.findByPreOrcamento(orcamento.getPreOrcamento());
         if (db != null && db.getFinalizado().equals(false)) {
             throw new MensagemValidacao("Já existe um orçamento para este cliente.");
         }
