@@ -114,9 +114,12 @@ const Orcamento = () => {
       setIsReadOnly(true);
       setTitleButton("Atualizar");
       (async () => {
-        await delay(1000);
+
         var dados = (await GetById(id)).data;
 
+        if(dados.produtoOrcamentos.length == 0)
+          setIsAddOrcameneto(true)
+        
         setDataForm({
           id: dados.id,
           preOrcamento: dados.preOrcamento.id,

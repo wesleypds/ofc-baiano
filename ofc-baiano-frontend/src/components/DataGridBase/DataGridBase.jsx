@@ -51,7 +51,6 @@ function DataGridBase({title, data, baseColumns, routeAddItem, nameExport, delet
   const handleDelete = (id) => {
     (async() =>{
       var resposta = await deleteMethod(id);
-      console.log(resposta)
       if(resposta.success){
         setDataRows(dataRows.filter(row => row.id !== id));
       }
