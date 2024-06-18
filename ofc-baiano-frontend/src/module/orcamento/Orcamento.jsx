@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { parseISO, format } from "date-fns";
 
+import LoadingCircular from '../../utils/LoadingCircular.jsx';
+
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
@@ -45,6 +47,9 @@ const Orcamento = () => {
   const [produtoList, setProdutoList] = useState([]);
   const [servicoList, setServicoList] = useState([]);
 
+  const [isAddOrcameneto, setIsAddOrcameneto] = useState(false);
+
+
   const [dataForm, setDataForm] = useState({
     preOrcamento: "",
     dataOrcamento: new Date().toISOString().split("T")[0],
@@ -72,7 +77,6 @@ const Orcamento = () => {
         produtoOrcamentos: dataForm.produtoOrcamentos,
         servicos: dataForm.servicos,
       };
-      console.log(dados);
       HandleSubmitForm(
         id,
         "orcamentos",
@@ -117,6 +121,9 @@ const Orcamento = () => {
           servicos: dados.servicos,
         });
       })();
+    }
+    else{
+      setIsAddOrcameneto(true)
     }
 
     (async () => {
@@ -207,18 +214,31 @@ const Orcamento = () => {
                 fullWidth
                 className={`mb-3`}
               />
+              {dataForm.produtoOrcamentos.length > 0 || isAddOrcameneto?  (
+                <>
+                  <DataGridOrcamentoProduto
+                    produtos={produtoList}
+                    dataForm={dataForm}
+                    setDataForm={setDataForm}
+                  />
+                </>
+                
+              ) : (
+                <LoadingCircular text={"Carregando produtos..."} />
+              )}
 
-              <DataGridOrcamentoProduto
-                produtos={produtoList}
-                dataForm={dataForm}
-                setDataForm={setDataForm}
-              />
-
-              <DataGridOrcamentoServico
-                servicosDisponiveis={servicoList}
-                dataForm={dataForm}
-                setDataForm={setDataForm}
-              />
+              {dataForm.servicos.length > 0 || isAddOrcameneto?  (
+                <>
+                  <DataGridOrcamentoServico
+                    servicosDisponiveis={servicoList}
+                    dataForm={dataForm}
+                    setDataForm={setDataForm}
+                  />
+                </>
+                
+              ) : (
+                <LoadingCircular text={"Carregando serviços..."} />
+              )}
             </FormControl>
           </div>
         </div>
@@ -229,56 +249,7 @@ const Orcamento = () => {
           </Box>
         )}
 
-        {/*TABELA COM A LISTAGEM DOS PRODUTOS SOMENTE TESTEI  */}
-        {/* {dataForm.produtoOrcamentos.length > 0 && (
-          <div className="row mt-4 justify-content-md-center">
-            <div className="col-6">
-              <h4>Produtos Adicionados</h4>
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Preço</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataForm.produtoOrcamentos.map((produtoOrcamento, index) => (
-                    <tr key={index}>
-                      <td>{produtoOrcamento.produto.nome}</td>
-                      <td>{produtoOrcamento.quantidade}</td>
-                      <td>{produtoOrcamento.produto.valor}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {dataForm.servicos.length > 0 && (
-          <div className="row mt-4 justify-content-md-center">
-            <div className="col-6">
-              <h4>Serviços Adicionados</h4>
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Serviço</th>
-                    <th>Preço</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataForm.servicos.map((servico, index) => (
-                    <tr key={index}>
-                      <td>{servico.servico.tipo}</td>
-                      <td>{servico.servico.valor}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )} */}
+        
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
