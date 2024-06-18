@@ -28,7 +28,6 @@ import { HandleSubmitForm } from "../../utils/Form/FormUtils.js";
 import DataGridOrcamentoProduto from "../../components/DataGridComponent/DataGridOrcamentoProduto.jsx";
 import DataGridOrcamentoServico from "../../components/DataGridComponent/DataGridOrcamentoServico.jsx";
 
-
 const Orcamento = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
@@ -54,6 +53,7 @@ const Orcamento = () => {
     preOrcamento: "",
     dataOrcamento: new Date() /*.toISOString().split("T")[0]*/,
     descontos: 0,
+    problemaMecanico: "",
     produtoOrcamentos: [],
     servicos: [],
   });
@@ -74,6 +74,7 @@ const Orcamento = () => {
         },
         dataOrcamento: dataForm.dataOrcamento,
         descontos: dataForm.descontos,
+        problemaMecanico: dataForm.problemaMecanico,
         produtoOrcamentos: dataForm.produtoOrcamentos,
         servicos: dataForm.servicos,
       };
@@ -101,6 +102,11 @@ const Orcamento = () => {
       setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
     }
 
+    if (dataForm.produtoOrcamentos.length === 0) {
+      setIsInvalidForm(true); // verificar se tem algum produto com id nulo
+      setMsgInvalidForm("Há um produto que não foi selecionado");
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -114,17 +120,16 @@ const Orcamento = () => {
       setIsReadOnly(true);
       setTitleButton("Atualizar");
       (async () => {
-
         var dados = (await GetById(id)).data;
 
-        if(dados.produtoOrcamentos.length == 0)
-          setIsAddOrcameneto(true)
-        
+        if (dados.produtoOrcamentos.length == 0) setIsAddOrcameneto(true);
+
         setDataForm({
           id: dados.id,
           preOrcamento: dados.preOrcamento.id,
           dataOrcamento: format(parseISO(dados.dataOrcamento), "yyyy-MM-dd"),
           descontos: dados.descontos,
+          problemaMecanico: dados.problemaMecanico,
           produtoOrcamentos: dados.produtoOrcamentos,
           servicos: dados.servicos,
         });
@@ -221,6 +226,25 @@ const Orcamento = () => {
                 fullWidth
                 className={`mb-3`}
               />
+
+              <TextField
+                label="Problema constatado pelo funcionário"
+                variant="standard"
+                type="text"
+                name="problema"
+                required
+                className="mb-3"
+                value={dataForm.problemaMecanico}
+                onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                multiline
+                rows={4}
+                error={!!errors.problemaMecanico}
+                helperText={errors.problemaMecanico}
+              />
+
               {dataForm.produtoOrcamentos.length > 0 || isAddOrcameneto ? (
                 <>
                   <DataGridOrcamentoProduto
