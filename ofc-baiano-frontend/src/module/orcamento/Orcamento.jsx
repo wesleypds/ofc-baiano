@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate , useLocation, useParams } from "react-router-dom";
-import { TextField, FormControl, Box, Select, MenuItem, InputLabel, FormHelperText, InputAdornment } from "@mui/material";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import {
+  TextField,
+  FormControl,
+  Box,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormHelperText,
+  InputAdornment,
+} from "@mui/material";
+import { parseISO, format } from "date-fns";
 
+import LoadingCircular from '../../utils/LoadingCircular.jsx';
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,20 +23,19 @@ import { ListAll as PreOrcamentoListAll } from "../../services/preorcamento/preO
 import { ListAll as ProdutoListAll } from "../../services/produto/produtoService.js";
 import { ListAll as ServicoListAll } from "../../services/servico/servicoService.js";
 
-
 import { GetById } from "../../services/orcamento/orcamentoService.js";
-import {HandleSubmitForm} from "../../utils/Form/FormUtils.js"
-import DataGridOrcamentoProduto from '../../components/DataGridComponent/DataGridOrcamentoProduto.jsx';
-import DataGridOrcamentoServico from '../../components/DataGridComponent/DataGridOrcamentoServico.jsx';
-
+import { HandleSubmitForm } from "../../utils/Form/FormUtils.js";
+import DataGridOrcamentoProduto from "../../components/DataGridComponent/DataGridOrcamentoProduto.jsx";
+import DataGridOrcamentoServico from "../../components/DataGridComponent/DataGridOrcamentoServico.jsx";
 
 const Orcamento = () => {
-
   const locationUrl = useLocation();
   const navigate = useNavigate();
 
   const [isInvalidForm, setIsInvalidForm] = useState(false);
-  const [msgInvalidForm, setMsgInvalidForm] = useState("Houve um erro em validar seus dados!");
+  const [msgInvalidForm, setMsgInvalidForm] = useState(
+    "Houve um erro em validar seus dados!"
+  );
   const [isReadOnly, setIsReadOnly] = useState(false);
 
   const [titleButton, setTitleButton] = useState("Cadastrar");
@@ -37,9 +47,12 @@ const Orcamento = () => {
   const [produtoList, setProdutoList] = useState([]);
   const [servicoList, setServicoList] = useState([]);
 
+  const [isAddOrcameneto, setIsAddOrcameneto] = useState(false);
+
+
   const [dataForm, setDataForm] = useState({
     preOrcamento: "",
-    dataOrcamento: new Date().toISOString().split('T')[0],
+    dataOrcamento: new Date().toISOString().split("T")[0],
     descontos: 0,
     produtoOrcamentos: [],
     servicos: [],
@@ -53,55 +66,64 @@ const Orcamento = () => {
     });
   };
 
-  const submitForm = ()=>{
-    if(validate()){
-
-      var dados = 
-      {
-        "preOrcamento": {
-            "id": dataForm.preOrcamento
+  const submitForm = () => {
+    if (validate()) {
+      var dados = {
+        preOrcamento: {
+          id: dataForm.preOrcamento,
         },
-        "dataOrcamento": dataForm.dataOrcamento,
-        "descontos": dataForm.descontos,
-        "produtoOrcamentos": dataForm.produtoOrcamentos,
-        "servicos": dataForm.servicos
-      }
-      console.log(dados)
-      HandleSubmitForm(id, "orcamentos", dados, setIsInvalidForm, setMsgInvalidForm,locationUrl, navigate)
+        dataOrcamento: dataForm.dataOrcamento,
+        descontos: dataForm.descontos,
+        produtoOrcamentos: dataForm.produtoOrcamentos,
+        servicos: dataForm.servicos,
+      };
+      HandleSubmitForm(
+        id,
+        "orcamentos",
+        dados,
+        setIsInvalidForm,
+        setMsgInvalidForm,
+        locationUrl,
+        navigate
+      );
     }
-  }
+  };
 
   const validate = () => {
     const newErrors = {};
 
     if (!dataForm.preOrcamento) {
-      newErrors.preOrcamento = 'Pré-Orçamento é obrigatório';
+      newErrors.preOrcamento = "Pré-Orçamento é obrigatório";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
     }
     if (id) {
-      setIsReadOnly(true)
+      setIsReadOnly(true);
       setTitleButton("Atualizar");
       (async () => {
-        var dados = (await GetById(id)).data
-        console.log(dados)
+        await delay(1000);
+        var dados = (await GetById(id)).data;
+
         setDataForm({
           id: dados.id,
           preOrcamento: dados.preOrcamento.id,
-          dataOrcamento: dados.dataOrcamento,
+          dataOrcamento: format(parseISO(dados.dataOrcamento), "yyyy-MM-dd"),
           descontos: dados.descontos,
           produtoOrcamentos: dados.produtoOrcamentos,
           servicos: dados.servicos,
         });
       })();
+    }
+    else{
+      setIsAddOrcameneto(true)
     }
 
     (async () => {
@@ -109,7 +131,6 @@ const Orcamento = () => {
       setProdutoList((await ProdutoListAll()).data);
       setServicoList((await ServicoListAll()).data);
     })();
-
   }, [navigate]);
 
   return (
@@ -122,100 +143,119 @@ const Orcamento = () => {
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <FormControl fullWidth>
-
-                <FormControl
-                  fullWidth
-                  required
-                  error={!!errors.preOrcamento}
-                  helperText={errors.preOrcamento}
-                  className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
+              <FormControl
+                fullWidth
+                required
+                error={!!errors.preOrcamento}
+                helperText={errors.preOrcamento}
+                className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
+              >
+                <InputLabel shrink>Pré-Orçamento</InputLabel>
+                <Select
+                  label="Pré-Orçamento"
+                  variant="standard"
+                  value={dataForm.preOrcamento}
+                  onChange={handleChange}
+                  name="preOrcamento"
+                  displayEmpty
+                  inputProps={{ readOnly: isReadOnly }}
                 >
-                  <InputLabel shrink>Pré-Orçamento</InputLabel>
-                  <Select
-                    label="Pré-Orçamento"
-                    variant="standard"
-                    value={dataForm.preOrcamento}
-                    onChange={handleChange}
-                    name="preOrcamento"
-                    displayEmpty
-                    inputProps={{ readOnly: isReadOnly }}
-                  >
-                    <MenuItem value="">
-                      <em>Escolha um pré-orçamento</em>
+                  <MenuItem value="">
+                    <em>Escolha um pré-orçamento</em>
+                  </MenuItem>
+                  {preOrcamentoList.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.cliente.nome}:{" "}
+                      {option.cliente.veiculos[0].veiculo.modelo} /{" "}
+                      {option.cliente.veiculos[0].placaVeiculo}
                     </MenuItem>
-                    {preOrcamentoList.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.cliente.nome}: {option.cliente.veiculos[0].veiculo.modelo} / {option.cliente.veiculos[0].placaVeiculo}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>{errors.preOrcamento}</FormHelperText>
-                </FormControl>
+                  ))}
+                </Select>
+                <FormHelperText>{errors.preOrcamento}</FormHelperText>
+              </FormControl>
+
+              <TextField
+                label="Data de Orçamento"
+                type="date"
+                name="dataOrcamento"
+                variant="standard"
+                value={dataForm.dataOrcamento}
+                onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  readOnly: isReadOnly,
+                }}
+                error={!!errors.dataOrcamento}
+                helperText={errors.dataOrcamento}
+                fullWidth
+                className={`mb-3 `}
+              />
+
+              <TextField
+                label="Desconto"
+                type="number"
+                name="descontos"
+                variant="standard"
+                value={dataForm.descontos}
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">%</InputAdornment>
+                  ),
+                  readOnly: isReadOnly,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                error={!!errors.descontos}
+                helperText={errors.descontos}
+                fullWidth
+                className={`mb-3`}
+              />
+              {dataForm.produtoOrcamentos.length > 0 || isAddOrcameneto?  (
+                <>
+                  <DataGridOrcamentoProduto
+                    produtos={produtoList}
+                    dataForm={dataForm}
+                    setDataForm={setDataForm}
+                  />
+                </>
                 
-                <TextField
-                  label="Data de Orçamento"
-                  type="date"
-                  name="dataOrcamento"
-                  variant="standard"
-                  value={dataForm.dataOrcamento}
-                  onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    readOnly: isReadOnly,
-                  }}
-                  error={!!errors.dataOrcamento}
-                  helperText={errors.dataOrcamento}
-                  fullWidth
-                  className={`mb-3 `}
-                />
+              ) : (
+                <LoadingCircular text={"Carregando produtos..."} />
+              )}
 
-                <TextField
-                  label="Desconto"
-                  type="number"
-                  name="descontos"
-                  variant="standard"
-                  value={dataForm.desconto}
-                  onChange={handleChange}
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                    readOnly: isReadOnly,
-                  }}
-                  error={!!errors.descontos}
-                  helperText={errors.descontos}
-                  fullWidth
-                  className={`mb-3`}
-                />
-
-                <DataGridOrcamentoProduto
-                  produtos={produtoList}
-                  dataForm={dataForm}
-                  setDataForm={setDataForm}
-                />
-
-                <DataGridOrcamentoServico
-                  servicosDisponiveis={servicoList}
-                  dataForm={dataForm}
-                  setDataForm={setDataForm}
-                />
-
+              {dataForm.servicos.length > 0 || isAddOrcameneto?  (
+                <>
+                  <DataGridOrcamentoServico
+                    servicosDisponiveis={servicoList}
+                    dataForm={dataForm}
+                    setDataForm={setDataForm}
+                  />
+                </>
+                
+              ) : (
+                <LoadingCircular text={"Carregando serviços..."} />
+              )}
             </FormControl>
           </div>
         </div>
 
         {isInvalidForm && (
-            <Box className={`user-disabled text-light` }>
-                <center>{msgInvalidForm}</center>
-            </Box>
+          <Box className={`user-disabled text-light`}>
+            <center>{msgInvalidForm}</center>
+          </Box>
         )}
+
+        
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
-            <ButtonRegister handleSubmit={submitForm} title={titleButton}/>
-            
-            <ButtonCancel route="/orcamentos"/>
-            
+            <ButtonRegister handleSubmit={submitForm} title={titleButton} />
+
+            <ButtonCancel route="/orcamentos" />
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { DeleteFilled as DeleteIcon } from '@ant-design/icons';
 
 const DataGridOrcamentoProduto = ({ produtos, dataForm, setDataForm }) => {
 
-  const [produtoOrcamentos, setProdutoOrcamentos] = useState(dataForm.produtoOrcamentos || []);
+  const [produtoOrcamentos, setProdutoOrcamentos] = useState(dataForm.produtoOrcamentos );
 
   const handleProdutoChange = (index, field, value) => {
     const updatedProdutoOrcamentos = [...produtoOrcamentos];
@@ -25,7 +25,6 @@ const DataGridOrcamentoProduto = ({ produtos, dataForm, setDataForm }) => {
     setProdutoOrcamentos(updatedProdutoOrcamentos);
     setDataForm({ ...dataForm, produtoOrcamentos: updatedProdutoOrcamentos });
   };
-
   return (
     <div>
       {produtoOrcamentos.map((item, index) => (
