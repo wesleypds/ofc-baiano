@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { parseISO, format } from "date-fns";
 
-import LoadingCircular from '../../utils/LoadingCircular.jsx';
+import LoadingCircular from "../../utils/LoadingCircular.jsx";
 
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,6 +27,7 @@ import { GetById } from "../../services/orcamento/orcamentoService.js";
 import { HandleSubmitForm } from "../../utils/Form/FormUtils.js";
 import DataGridOrcamentoProduto from "../../components/DataGridComponent/DataGridOrcamentoProduto.jsx";
 import DataGridOrcamentoServico from "../../components/DataGridComponent/DataGridOrcamentoServico.jsx";
+
 
 const Orcamento = () => {
   const locationUrl = useLocation();
@@ -49,10 +50,9 @@ const Orcamento = () => {
 
   const [isAddOrcameneto, setIsAddOrcameneto] = useState(false);
 
-
   const [dataForm, setDataForm] = useState({
     preOrcamento: "",
-    dataOrcamento: new Date().toISOString().split("T")[0],
+    dataOrcamento: new Date() /*.toISOString().split("T")[0]*/,
     descontos: 0,
     produtoOrcamentos: [],
     servicos: [],
@@ -67,7 +67,7 @@ const Orcamento = () => {
   };
 
   const submitForm = () => {
-    if (validate()) {
+    if (validate() && isInvalidForm) {
       var dados = {
         preOrcamento: {
           id: dataForm.preOrcamento,
@@ -96,6 +96,11 @@ const Orcamento = () => {
       newErrors.preOrcamento = "Pré-Orçamento é obrigatório";
     }
 
+    if (dataForm.servicos.length === 0) {
+      setIsInvalidForm(true);
+      setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -121,9 +126,8 @@ const Orcamento = () => {
           servicos: dados.servicos,
         });
       })();
-    }
-    else{
-      setIsAddOrcameneto(true)
+    } else {
+      setIsAddOrcameneto(true);
     }
 
     (async () => {
@@ -214,7 +218,7 @@ const Orcamento = () => {
                 fullWidth
                 className={`mb-3`}
               />
-              {dataForm.produtoOrcamentos.length > 0 || isAddOrcameneto?  (
+              {dataForm.produtoOrcamentos.length > 0 || isAddOrcameneto ? (
                 <>
                   <DataGridOrcamentoProduto
                     produtos={produtoList}
@@ -222,12 +226,11 @@ const Orcamento = () => {
                     setDataForm={setDataForm}
                   />
                 </>
-                
               ) : (
                 <LoadingCircular text={"Carregando produtos..."} />
               )}
 
-              {dataForm.servicos.length > 0 || isAddOrcameneto?  (
+              {dataForm.servicos.length > 0 || isAddOrcameneto ? (
                 <>
                   <DataGridOrcamentoServico
                     servicosDisponiveis={servicoList}
@@ -235,7 +238,6 @@ const Orcamento = () => {
                     setDataForm={setDataForm}
                   />
                 </>
-                
               ) : (
                 <LoadingCircular text={"Carregando serviços..."} />
               )}
@@ -248,8 +250,6 @@ const Orcamento = () => {
             <center>{msgInvalidForm}</center>
           </Box>
         )}
-
-        
 
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
