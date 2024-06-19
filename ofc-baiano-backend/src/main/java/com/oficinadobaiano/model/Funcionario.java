@@ -30,7 +30,7 @@ public class Funcionario {
     @Column(name = "salario", nullable = false)
     private Double salario;
 
-    private Boolean disponibilidade;
+    private Boolean disponibilidade = true;
 
     private Integer servicosSendoFeitos;
 }

@@ -29,4 +29,6 @@ public class Agendamento {
     @ManyToOne
     @JoinColumn(name = "id_funcionario", referencedColumnName = "id")
     private Funcionario funcionario;
+    
+    private Boolean finalizado = false;
 }

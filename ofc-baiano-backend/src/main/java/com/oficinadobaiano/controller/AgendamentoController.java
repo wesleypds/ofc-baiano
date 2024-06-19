@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oficinadobaiano.model.Agendamento;
 import com.oficinadobaiano.model.dto.Corpo;
+import com.oficinadobaiano.model.excecoes.MensagemValidacao;
 import com.oficinadobaiano.service.AgendamentoService;
 
 @RestController
@@ -58,7 +59,7 @@ public class AgendamentoController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @PostMapping
-    public ResponseEntity<Corpo> create(@RequestBody Agendamento agendamento){
+    public ResponseEntity<Corpo> create(@RequestBody Agendamento agendamento) throws MensagemValidacao{
         agendamento.setId(null);
         Agendamento a = agendamentoService.save(agendamento);
         Corpo response = new Corpo<>();

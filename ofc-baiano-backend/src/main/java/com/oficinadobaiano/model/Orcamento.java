@@ -14,6 +14,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -24,10 +25,12 @@ public class Orcamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_pre_orcamento", referencedColumnName = "id", nullable = false)
+    @Transient
     private PreOrcamento preOrcamento;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
+    private Cliente cliente;
 
     @NotNull
     @Column(name = "data_orcamento", nullable = false)
@@ -54,6 +57,4 @@ public class Orcamento {
     private String problemaMecanico;
 
     private Boolean aprovado;
-
-    private Boolean finalizado = false;
 }

@@ -35,9 +35,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
     @Override
     public Orcamento save(Orcamento orcamento) throws MensagemValidacao {
-        saveValidation(orcamento);
         trataEscolhaCliente(orcamento);
         orcamento.setValor(calculaValorOrcamento(orcamento));
+        preOrcamentoRepository.deleteById(orcamento.getPreOrcamento().getId());     
         return orcamentoRepository.save(orcamento);
     }
 
@@ -53,6 +53,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
     @Override
     public Orcamento update(Orcamento orcamento) {
+        Optional<Orcamento> db = orcamentoRepository.findById(orcamento.getId());
+        Orcamento o = db.get();
+        orcamento.setCliente(o.getCliente());
         orcamento.setValor(calculaValorOrcamento(orcamento));
         return orcamentoRepository.save(orcamento);
     }
@@ -73,13 +76,8 @@ public class OrcamentoServiceImpl implements OrcamentoService {
             orcamento.setAprovado(true);
             orcamento.setProblemaMecanico(null);
         }
-    }
 
-    private void saveValidation(Orcamento orcamento) throws MensagemValidacao {
-        Orcamento db = orcamentoRepository.findByPreOrcamento(orcamento.getPreOrcamento());
-        if (db != null && db.getFinalizado().equals(false)) {
-            throw new MensagemValidacao("Já existe um orçamento para este cliente.");
-        }
+        orcamento.setCliente(preOrcamento.getCliente());
     }
 
     private Double calculaValorOrcamento(Orcamento orcamento) {
