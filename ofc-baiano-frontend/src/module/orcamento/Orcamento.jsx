@@ -51,11 +51,12 @@ const Orcamento = () => {
 
   const [dataForm, setDataForm] = useState({
     preOrcamento: "",
-    dataOrcamento: new Date() /*.toISOString().split("T")[0]*/,
+    dataOrcamento: new Date().toISOString().split("T")[0],
     descontos: 0,
     problemaMecanico: "",
     produtoOrcamentos: [],
     servicos: [],
+
   });
 
   const handleChange = (e) => {
@@ -111,7 +112,6 @@ const Orcamento = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   useEffect(() => {
     if (locationUrl.state.token != "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
@@ -231,7 +231,7 @@ const Orcamento = () => {
                 label="Problema constatado pelo funcionário"
                 variant="standard"
                 type="text"
-                name="problema"
+                name="problemaMecanico"
                 required
                 className="mb-3"
                 value={dataForm.problemaMecanico}
