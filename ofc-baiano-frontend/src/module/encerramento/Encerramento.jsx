@@ -57,15 +57,18 @@ const Encerramento = () => {
   };
 
   const submitForm = () => {
+
     if (validate() && !isInvalidForm) {
+
       var dados = {
         dataEntrega: dataForm.dataEntrega,
         tipoPagamento: dataForm.tipoPagamento,
         valorFinal: dataForm.valorFinal,
         agendamento: {
-          id: dataForm.agendamento.id,
+          id: dataForm.agendamento,
         },
       };
+      console.log(dados)
       HandleSubmitForm(
         id,
         "encerramentos",
@@ -80,9 +83,10 @@ const Encerramento = () => {
 
   const validate = () => {
     const newErrors = {};
+    setIsInvalidForm(false)
 
-    if (!dataForm.preOrcamento) {
-      newErrors.preOrcamento = "Agendamento é obrigatório";
+    if (!dataForm.agendamento) {
+      newErrors.agendamento = "Agendamento é obrigatório";
     }
 
     setErrors(newErrors);
