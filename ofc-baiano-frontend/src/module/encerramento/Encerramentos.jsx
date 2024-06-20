@@ -5,6 +5,8 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import { ListAll, DeleteById } from "../../services/encerramento/encerramentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
+import { RealFormatter } from '../../utils/DataGridBase/RealFormatter.jsx';
+import { parseISO, format } from "date-fns";
 
 const Encerramentos = () => {
   
@@ -15,7 +17,7 @@ const Encerramentos = () => {
 
   var columns = [
     { key: "id", name: "ID" },
-    { key: "dataEntrega", name: "Data de Entrega"},
+    { key: "dataEntrega", name: "Data de Entrega", renderCell: ({row}) => format(parseISO(row.dataEntrega), "dd/MM/yyyy")},
     { key: "tipoPagamento", name: "Forma de Pagamento"},
     { key: "valorFinal", name: "Valor Total", renderCell: (item) => RealFormatter(item.row.valorFinal) }
   ];

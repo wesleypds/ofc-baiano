@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oficinadobaiano.model.Agendamento;
 import com.oficinadobaiano.model.Encerramento;
 import com.oficinadobaiano.repository.EncerramentoRepository;
 import com.oficinadobaiano.service.EncerramentoService;
@@ -13,6 +14,9 @@ import com.oficinadobaiano.service.EncerramentoService;
 public class EncerramentoServiceImpl implements EncerramentoService {
     @Autowired
     private EncerramentoRepository encerramentoRepository;
+
+    @Autowired
+    private AgendamentoServiceImpl agendamentoService;
 
     @Override
     public Encerramento save(Encerramento encerramento) {
@@ -41,6 +45,8 @@ public class EncerramentoServiceImpl implements EncerramentoService {
     }
 
     private void calculaValorFinal(Encerramento entity) {
-        entity.setValorFinal(entity.getAgendamento().getOrcamento().getValor());
+        Optional<Agendamento> db = agendamentoService.findById(entity.getAgendamento().getId());
+        Agendamento agendamento = db.get();
+        entity.setValorFinal(agendamento.getOrcamento().getValor());
     }
 }
