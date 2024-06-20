@@ -68,7 +68,7 @@ const Orcamento = () => {
   };
 
   const submitForm = () => {
-    if (validate() && isInvalidForm) {
+    if (validate() && !isInvalidForm) {
       var dados = {
         preOrcamento: {
           id: dataForm.preOrcamento,
@@ -92,7 +92,10 @@ const Orcamento = () => {
   };
 
   const validate = () => {
-    const newErrors = {};
+
+    const newErrors = {};      
+    setIsInvalidForm(false); 
+
 
     if (!dataForm.preOrcamento) {
       newErrors.preOrcamento = "Pré-Orçamento é obrigatório";
@@ -103,9 +106,15 @@ const Orcamento = () => {
       setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
     }
 
-    if (dataForm.produtoOrcamentos.length === 0) {
-      setIsInvalidForm(true); // verificar se tem algum produto com id nulo
+    if (dataForm.produtoOrcamentos.some(item => item.produto.id == null || item.produto.id == '')) {
+      setIsInvalidForm(true); 
       setMsgInvalidForm("Há um produto que não foi selecionado");
+    }
+
+
+    if (dataForm.servicos.some(item => item.servico.id == null || item.servico.id == '')) {
+      setIsInvalidForm(true); 
+      setMsgInvalidForm("Há um Serviço que não foi selecionado");
     }
 
     setErrors(newErrors);
@@ -123,10 +132,8 @@ const Orcamento = () => {
         var dados = (await GetById(id)).data;
 
         if (dados.produtoOrcamentos.length == 0) setIsAddOrcameneto(true);
-
         setDataForm({
           id: dados.id,
-          preOrcamento: dados.preOrcamento.id,
           dataOrcamento: format(parseISO(dados.dataOrcamento), "yyyy-MM-dd"),
           descontos: dados.descontos,
           problemaMecanico: dados.problemaMecanico,
@@ -155,36 +162,40 @@ const Orcamento = () => {
         <div className="row mt-4 justify-content-md-center">
           <div className="col-6">
             <FormControl fullWidth>
-              <FormControl
-                fullWidth
-                required
-                error={!!errors.preOrcamento}
-                helperText={errors.preOrcamento}
-                className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
-              >
-                <InputLabel shrink>Pré-Orçamento</InputLabel>
-                <Select
-                  label="Pré-Orçamento"
-                  variant="standard"
-                  value={dataForm.preOrcamento}
-                  onChange={handleChange}
-                  name="preOrcamento"
-                  displayEmpty
-                  inputProps={{ readOnly: isReadOnly }}
-                >
-                  <MenuItem value="">
-                    <em>Escolha um pré-orçamento</em>
-                  </MenuItem>
-                  {preOrcamentoList.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.cliente.nome}:{" "}
-                      {option.cliente.veiculos[0].veiculo.modelo} /{" "}
-                      {option.cliente.veiculos[0].placaVeiculo}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>{errors.preOrcamento}</FormHelperText>
-              </FormControl>
+
+              
+              {id == null  && (
+                  <FormControl
+                    fullWidth
+                    required
+                    error={!!errors.preOrcamento}
+                    helperText={errors.preOrcamento}
+                    className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
+                  >
+                    <InputLabel shrink>Pré-Orçamento</InputLabel>
+                    <Select
+                      label="Pré-Orçamento"
+                      variant="standard"
+                      value={dataForm.preOrcamento}
+                      onChange={handleChange}
+                      name="preOrcamento"
+                      displayEmpty
+                      inputProps={{ readOnly: isReadOnly }}
+                    >
+                      <MenuItem value="">
+                        <em>Escolha um pré-orçamento</em>
+                      </MenuItem>
+                      {preOrcamentoList.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.cliente.nome}:{" "}
+                          {option.cliente.veiculos[0].veiculo.modelo} /{" "}
+                          {option.cliente.veiculos[0].placaVeiculo}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>{errors.preOrcamento}</FormHelperText>
+                  </FormControl>
+              )}
 
               <TextField
                 label="Data de Orçamento"

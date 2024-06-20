@@ -17,7 +17,10 @@ const DataGridOrcamentoProduto = ({ produtos, dataForm, setDataForm }) => {
   };
 
   const handleAddProdutoOrcamento = () => {
-    setProdutoOrcamentos([...produtoOrcamentos, { produto: { id: '' }, quantidade: 1 }]);
+    const produtos = [...produtoOrcamentos, { produto: { id: '' }, quantidade: 1 }]
+    setProdutoOrcamentos(produtos);
+    setDataForm({ ...dataForm, produtoOrcamentos: produtos});
+
   };
 
   const handleRemoveProdutoOrcamento = (index) => {

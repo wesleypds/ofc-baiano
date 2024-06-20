@@ -18,7 +18,7 @@ const Orcamentos = () => {
   var columns = [
     { key: "id", name: "ID" },
     { key: "cliente", name: "Cliente", renderCell: ({row}) => row.cliente.nome },
-    { key: "problema", name: "Problema", renderCell: ({row}) => row.problemaCliente },
+    { key: "problema_mecanico", name: "Problema", renderCell: ({row}) => row.problemaMecanico },
   ];
 
   const fetchData = useCallback(async () => {

@@ -16,7 +16,9 @@ const DataGridOrcamentoServico = ({ servicosDisponiveis, dataForm, setDataForm }
   };
 
   const handleAddServico = () => {
-    setServicos([...servicos, { servico: { id: '' }, requerido: false }]);
+    const servicosItem = [...servicos, { servico: { id: '' }, requerido: false }]
+    setServicos(servicosItem);
+    setDataForm({ ...dataForm, servicos: servicosItem});
   };
 
   const handleRemoveServico = (index) => {
@@ -59,7 +61,7 @@ const DataGridOrcamentoServico = ({ servicosDisponiveis, dataForm, setDataForm }
           </Grid>
           <Grid item xs={3}>
             <IconButton onClick={() => handleRemoveServico(index)}>
-              <DeleteIcon />
+              <DeleteIcon style={{ color: "#f75454" }} />
             </IconButton>
           </Grid>
         </Grid>
