@@ -7,6 +7,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
 import { parseISO, format } from "date-fns";
 
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+import 'moment/locale/pt-br';
+
+moment.locale('pt-br');
+
+const messages = {
+  allDay: 'Dia Inteiro',
+  previous: '<',
+  next: '>',
+  today: 'Hoje',
+  month: 'Mês',
+  week: 'Semana',
+  day: 'Dia',
+  agenda: 'Agenda',
+  date: 'Data',
+  time: 'Hora',
+  event: 'Evento',
+  showMore: (total) => `+ (${total}) Eventos`}
+
+const localizer = momentLocalizer(moment);
+
 const Agendamentos = () => {
   
   const locationUrl = useLocation();
@@ -23,6 +48,7 @@ const Agendamentos = () => {
   ];
 
 
+
   useEffect(() => {
     if (locationUrl.state.token !== "7f08f0ae81840a4a1887d3bdf9201efb") {
       navigate("/");
@@ -31,12 +57,11 @@ const Agendamentos = () => {
     (async () => {
       var resposta = await ListAll();
 
-      
+      console.log(resposta)
       setRows(resposta.data);
       setLoading(false);
     })();
   }, [navigate, locationUrl.state.token]);
-
 
 
   return (
@@ -44,6 +69,19 @@ const Agendamentos = () => {
       {loading ? (
         <LoadingCircular text={"Carregando Agendamentos..."} />
       ) : (
+
+        <>
+        <div class="p-2 mt-4">
+          <Calendar
+            localizer={localizer}
+            messages={messages}
+            events={rows}
+            startAccessor="inicioServico"
+            endAccessor="inicioServico"
+            titleAccessor={(event) => `${event.orcamento.id}: ${event.orcamento.cliente.veiculos[0].veiculo.modelo} / ${event.orcamento.cliente.veiculos[0].placaVeiculo}` }
+            style={{ height: 600 }}
+          /> 
+        </div>
 
           <DataGridBase
             title={"Agendamentos Cadastrados"}
@@ -53,10 +91,12 @@ const Agendamentos = () => {
             nameExport={"agendamento"}
             deleteMethod={async (id) => { return await DeleteById(id) }}
           />
-        
+      </>
 
       )}
     </LayoutBase>
+    
+    
   );
 };
 
