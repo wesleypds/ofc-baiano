@@ -145,8 +145,7 @@ const Encerramento = () => {
                   {agendamentoList.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
                       {option.id}:
-                      {/* {option.cliente.veiculos[0].veiculo.modelo} /{" "}
-                      {option.cliente.veiculos[0].placaVeiculo} */}
+                      {option.funcionario.nome}
                     </MenuItem>
                   ))}
                 </Select>
