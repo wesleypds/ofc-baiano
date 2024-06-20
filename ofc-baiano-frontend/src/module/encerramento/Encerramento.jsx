@@ -85,16 +85,6 @@ const Encerramento = () => {
       newErrors.preOrcamento = "Agendamento é obrigatório";
     }
 
-    // if (dataForm.servicos.length === 0) {
-    //   setIsInvalidForm(true);
-    //   setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
-    // }
-
-    // if (dataForm.produtoOrcamentos.length === 0) {
-    //   setIsInvalidForm(true); // verificar se tem algum produto com id nulo
-    //   setMsgInvalidForm("Há um produto que não foi selecionado");
-    // }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -145,7 +135,7 @@ const Encerramento = () => {
                   variant="standard"
                   value={dataForm.agendamento}
                   onChange={handleChange}
-                  name="orcamento"
+                  name="agendamento"
                   displayEmpty
                   inputProps={{ readOnly: isReadOnly }}
                 >
@@ -154,8 +144,9 @@ const Encerramento = () => {
                   </MenuItem>
                   {agendamentoList.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
-                      {option.id}: {option.cliente.veiculos[0].veiculo.modelo} /{" "}
-                      {option.cliente.veiculos[0].placaVeiculo}
+                      {option.id}:
+                      {/* {option.cliente.veiculos[0].veiculo.modelo} /{" "}
+                      {option.cliente.veiculos[0].placaVeiculo} */}
                     </MenuItem>
                   ))}
                 </Select>
@@ -185,7 +176,7 @@ const Encerramento = () => {
                 <InputLabel>Forma de Pagamento</InputLabel>
                 <Select
                   variant="standard"
-                  name="complexidade"
+                  name="tipoPagamento"
                   value={dataForm.tipoPagamento}
                   onChange={handleChange}
                   error={!!errors.tipoPagamento}
@@ -209,7 +200,7 @@ const Encerramento = () => {
                   startAdornment={
                     <InputAdornment position="start">R$</InputAdornment>
                   }
-                  name="valor"
+                  name="valorFinal"
                   onChange={handleChange}
                   value={dataForm.valorFinal}
                   type="number"
