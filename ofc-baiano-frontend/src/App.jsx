@@ -14,7 +14,10 @@ import PreOrcamentos from "./module/preorcamento/PreOrcamentos.jsx"
 import PreOrcamento from "./module/preorcamento/PreOrcamento.jsx"
 import Orcamentos from "./module/orcamento/Orcamentos.jsx"
 import Orcamento from "./module/orcamento/Orcamento.jsx"
-
+import Agendamentos from "./module/agendamento/Agendamentos.jsx"
+import Agendamento from "./module/agendamento/Agendamento.jsx"
+import Encerramento from "./module/encerramento/Encerramento.jsx"
+import Encerramentos from "./module/encerramento/Encerramentos.jsx"
 import Servicos from "./module/servico/Servicos.jsx"
 import Servico from "./module/servico/Servico.jsx"
 import Funcionarios from "./module/funcionario/Funcionarios.jsx"
@@ -60,8 +63,12 @@ function App() {
           <Route path="/orcamentos" element={<Orcamentos/>}/>
           <Route path="/orcamento" element={<Orcamento/>}/>
           <Route path="/orcamento/:id" element={<Orcamento/>}/>
-          
 
+          <Route path="/agendamentos" element={<Agendamentos/>}/>
+          <Route path="/agendamento" element={<Agendamento/>}/>
+          
+          <Route path="/encerramentos" element={<Encerramentos/>}/>
+          <Route path="/encerramento" element={<Encerramento/>}/>
         </Routes>
       </BrowserRouter>
     </div>
