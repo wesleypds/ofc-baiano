@@ -69,6 +69,7 @@ function App() {
           
           <Route path="/encerramentos" element={<Encerramentos/>}/>
           <Route path="/encerramento" element={<Encerramento/>}/>
+          <Route path="/encerramento/:id" element={<Encerramento/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -9,6 +9,7 @@ import {
   InputLabel,
   FormHelperText,
   InputAdornment,
+  Input
 } from "@mui/material";
 import { parseISO, format } from "date-fns";
 
@@ -17,14 +18,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ButtonCancel from "../../components/ButtonCancel.jsx";
 import ButtonRegister from "../../components/ButtonRegister.jsx";
 
-import { ListAll as PreOrcamentoListAll } from "../../services/preorcamento/preOrcamentoService.js";
-import { ListAll as ProdutoListAll } from "../../services/produto/produtoService.js";
-import { ListAll as ServicoListAll } from "../../services/servico/servicoService.js";
+import { ListAll as AgendamentoListAll } from "../../services/agendamento/agendamentoService.js";
 
 import { GetById } from "../../services/agendamento/agendamentoService.js";
 import { HandleSubmitForm } from "../../utils/Form/FormUtils.js";
 
-const Agendamento = () => {
+const Encerramento = () => {
   const locationUrl = useLocation();
   const navigate = useNavigate();
 
@@ -39,19 +38,18 @@ const Agendamento = () => {
 
   const { id } = useParams();
 
-  const [preOrcamentoList, setPreOrcamentoList] = useState([]);
-
-  const [isAddOrcameneto, setIsAddOrcameneto] = useState(false);
+  const [agendamentoList, setAgendamentoList] = useState([]);
 
   const [dataForm, setDataForm] = useState({
-    orcamento: "",
-    inicioServico: new Date().toISOString().split("T")[0],
-    finallzado: false,
-    funcionario: ""
+    dataEntrega: new Date().toISOString().split("T")[0],
+    tipoPagamento: "",
+    valorFinal: "",
+    agendamento: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(dataForm)
     setDataForm({
       ...dataForm,
       [name]: value,
@@ -59,20 +57,18 @@ const Agendamento = () => {
   };
 
   const submitForm = () => {
-    if (validate() && isInvalidForm) {
+    if (validate() && !isInvalidForm) {
       var dados = {
-        orcamento: {
-          id: dataForm.orcamento,
-        },
-        inicioServico: dataForm.inicioServico,
-        finalizado: dataForm.finalizado,
-        funcionario: {
-          id: dataForm.funcionario.id,
+        dataEntrega: dataForm.dataEntrega,
+        tipoPagamento: dataForm.tipoPagamento,
+        valorFinal: dataForm.valorFinal,
+        agendamento: {
+          id: dataForm.agendamento.id,
         },
       };
       HandleSubmitForm(
         id,
-        "agendamentos",
+        "encerramentos",
         dados,
         setIsInvalidForm,
         setMsgInvalidForm,
@@ -86,18 +82,18 @@ const Agendamento = () => {
     const newErrors = {};
 
     if (!dataForm.preOrcamento) {
-      newErrors.preOrcamento = "Pré-Orçamento é obrigatório";
+      newErrors.preOrcamento = "Agendamento é obrigatório";
     }
 
-    if (dataForm.servicos.length === 0) {
-      setIsInvalidForm(true);
-      setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
-    }
+    // if (dataForm.servicos.length === 0) {
+    //   setIsInvalidForm(true);
+    //   setMsgInvalidForm("Pelo menos um serviço deve ser selecionado");
+    // }
 
-    if (dataForm.produtoOrcamentos.length === 0) {
-      setIsInvalidForm(true); // verificar se tem algum produto com id nulo
-      setMsgInvalidForm("Há um produto que não foi selecionado");
-    }
+    // if (dataForm.produtoOrcamentos.length === 0) {
+    //   setIsInvalidForm(true); // verificar se tem algum produto com id nulo
+    //   setMsgInvalidForm("Há um produto que não foi selecionado");
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -112,27 +108,17 @@ const Agendamento = () => {
       setTitleButton("Atualizar");
       (async () => {
         var dados = (await GetById(id)).data;
-
-        if (dados.produtoOrcamentos.length == 0) setIsAddOrcameneto(true);
-
         setDataForm({
           id: dados.id,
-          preOrcamento: dados.preOrcamento.id,
-          dataOrcamento: format(parseISO(dados.dataOrcamento), "yyyy-MM-dd"),
-          descontos: dados.descontos,
-          problemaMecanico: dados.problemaMecanico,
-          produtoOrcamentos: dados.produtoOrcamentos,
-          servicos: dados.servicos,
+          dataEntrega: format(parseISO(dados.dataEntrega), "yyyy-MM-dd"),
+          tipoPagamento: dados.tipoPagamento,
+          valorFinal: dados.valorFinal,
+          agendamento: dados.agendamento.id,
         });
       })();
-    } else {
-      setIsAddOrcameneto(true);
     }
-
     (async () => {
-      setPreOrcamentoList((await PreOrcamentoListAll()).data);
-      setProdutoList((await ProdutoListAll()).data);
-      setServicoList((await ServicoListAll()).data);
+      setAgendamentoList((await AgendamentoListAll()).data);
     })();
   }, [navigate]);
 
@@ -140,7 +126,7 @@ const Agendamento = () => {
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       <div className="container-fluid">
         <h1 className="mb-4">
-          <b>Cadastro de Agendamento</b>
+          <b>Cadastro de Encerramento</b>
         </h1>
 
         <div className="row mt-4 justify-content-md-center">
@@ -149,40 +135,39 @@ const Agendamento = () => {
               <FormControl
                 fullWidth
                 required
-                error={!!errors.preOrcamento}
-                helperText={errors.preOrcamento}
+                error={!!errors.agendamento}
+                helperText={errors.agendamento}
                 className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
               >
-                <InputLabel shrink>Orçamento</InputLabel>
+                <InputLabel shrink>Serviços Agendados</InputLabel>
                 <Select
-                  label="Orçamento Aprovado"
+                  label="Serviços Agendados"
                   variant="standard"
-                  value={dataForm.preOrcamento}
+                  value={dataForm.agendamento}
                   onChange={handleChange}
-                  name="preOrcamento"
+                  name="orcamento"
                   displayEmpty
                   inputProps={{ readOnly: isReadOnly }}
                 >
                   <MenuItem value="">
-                    <em>Escolha um orçamento</em>
+                    <em>Escolha um agendamento</em>
                   </MenuItem>
-                  {preOrcamentoList.map((option) => (
+                  {agendamentoList.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
-                      {option.cliente.nome}:{" "}
-                      {option.cliente.veiculos[0].veiculo.modelo} /{" "}
+                      {option.id}: {option.cliente.veiculos[0].veiculo.modelo} /{" "}
                       {option.cliente.veiculos[0].placaVeiculo}
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText>{errors.preOrcamento}</FormHelperText>
+                <FormHelperText>{errors.agendamento}</FormHelperText>
               </FormControl>
 
               <TextField
-                label="Data de Início do Serviço"
+                label="Data de Encerramento do Serviço"
                 type="date"
-                name="inicioServico"
+                name="dataEntrega"
                 variant="standard"
-                value={dataForm.dataOrcamento}
+                value={dataForm.dataEntrega}
                 onChange={handleChange}
                 InputLabelProps={{
                   shrink: true,
@@ -190,15 +175,48 @@ const Agendamento = () => {
                 inputProps={{
                   readOnly: isReadOnly,
                 }}
-                error={!!errors.dataOrcamento}
-                helperText={errors.dataOrcamento}
+                error={!!errors.dataEntrega}
+                helperText={errors.dataEntrega}
                 fullWidth
                 className={`mb-3 `}
               />
 
-              
+              <FormControl fullWidth className="mb-3" variant="standard">
+                <InputLabel>Forma de Pagamento</InputLabel>
+                <Select
+                  variant="standard"
+                  name="complexidade"
+                  value={dataForm.tipoPagamento}
+                  onChange={handleChange}
+                  error={!!errors.tipoPagamento}
+                  helperText={errors.tipoPagamento}
+                >
+                  <MenuItem value="CARTAO_DEBITO">Cartão de Débito</MenuItem>
+                  <MenuItem value="CARTAO_CREDITO">Cartão de Crédito</MenuItem>
+                  <MenuItem value="PIX">Pix</MenuItem>
+                  <MenuItem value="DINHEIRO">Dinheiro</MenuItem>
+                </Select>
+              </FormControl>
 
-              
+              <FormControl
+                fullWidth
+                className="mb-3"
+                required
+                variant="standard"
+              >
+                <InputLabel>Valor Final</InputLabel>
+                <Input
+                  startAdornment={
+                    <InputAdornment position="start">R$</InputAdornment>
+                  }
+                  name="valor"
+                  onChange={handleChange}
+                  value={dataForm.valorFinal}
+                  type="number"
+                  error={!!errors.valorFinal}
+                  helperText={errors.valorFinal}
+                />
+              </FormControl>
             </FormControl>
           </div>
         </div>
@@ -213,7 +231,7 @@ const Agendamento = () => {
           <div className="col-6">
             <ButtonRegister handleSubmit={submitForm} title={titleButton} />
 
-            <ButtonCancel route="/agendamentos" />
+            <ButtonCancel route="/encerramentos" />
           </div>
         </div>
       </div>
@@ -221,4 +239,4 @@ const Agendamento = () => {
   );
 };
 
-export default Agendamento;
+export default Encerramento;

@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useCallback  } from "react";
+import React, { useState, useEffect  } from "react";
 import { useNavigate,useLocation } from "react-router-dom";
 import LoadingCircular from '../../utils/LoadingCircular.jsx';
 import LayoutBase from "../../components/layout/LayoutBase.jsx";
-import { ListAll, DeleteById, GetById, SendFormPut } from "../../services/agendamento/agendamentoService.js";
+import { ListAll, DeleteById } from "../../services/encerramento/encerramentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-import { CheckCircleOutlined} from '@ant-design/icons';
-import { IconButton } from '@mui/material';
 
-const Orcamentos = () => {
+const Encerramentos = () => {
   
   const locationUrl = useLocation();
   const navigate = useNavigate();
@@ -17,9 +15,9 @@ const Orcamentos = () => {
 
   var columns = [
     { key: "id", name: "ID" },
-    { key: "inicioServico", name: "Data de Inicio", renderCell: ({row}) => row.cliente.nome },
-    { key: "funcionario", name: "Mecânico Responsável", renderCell: ({row}) => row.problemaCliente },
-    // { key: "finalizado", name: "Finalizado", renderCell: ({row}) => renderAprovarAgendamentoButton(row.id)}
+    { key: "dataEntrega", name: "Data de Entrega"},
+    { key: "tipoPagamento", name: "Forma de Pagamento"},
+    { key: "valorFinal", name: "Valor Total", renderCell: (item) => RealFormatter(item.row.valorFinal) }
   ];
 
   useEffect(() => {
@@ -35,32 +33,25 @@ const Orcamentos = () => {
   }, [navigate, locationUrl.state.token]);
 
 
-  const renderAprovarAgendamentoButton = (id) => (
-    <IconButton onClick={() => handleAprovarOrcamentoClient(id)}>
-      <CheckCircleOutlined  style={{ color: "#3543c4" }} />
-    </IconButton>
-  );
+
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
       {loading ? (
-        <LoadingCircular text={"Carregando Agendamentos..."} />
+        <LoadingCircular text={"Carregando Encerramentos..."} />
       ) : (
 
           <DataGridBase
-            title={"Agendamentos Cadastrados"}
+            title={"Encerramentos Cadastrados"}
             data={rows}
             baseColumns={columns}
-            routeAddItem={"agendamento"}
-            nameExport={"agendamento"}
+            routeAddItem={"encerramento"}
+            nameExport={"encerramento"}
             deleteMethod={async (id) => { return await DeleteById(id) }}
-            additionalButton={renderAprovarAgendamentoButton}
           />
-        
-
       )}
     </LayoutBase>
   );
 };
 
-export default Orcamentos;
+export default Encerramentos;
