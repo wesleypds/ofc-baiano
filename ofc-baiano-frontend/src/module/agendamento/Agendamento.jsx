@@ -45,6 +45,7 @@ const Agendamento = () => {
     orcamento: "",
     inicioServico: new Date().toISOString().split("T")[0],
     finalizado: false,
+    funcionario: ""
   });
 
   const handleChange = (e) => {
@@ -56,16 +57,21 @@ const Agendamento = () => {
   };
 
   const submitForm = () => {
+
     if (validate() && !isInvalidForm) {
+
       var dados = {
+        id: dataForm.id,
         orcamento: {
           id: dataForm.orcamento,
         },
         inicioServico: dataForm.inicioServico,
         funcionario: {
-          id: dataForm.funcionario.id,
+          id: dataForm.funcionario,
         },
       };
+      console.log(dados)
+
       HandleSubmitForm(
         id,
         "agendamentos",
@@ -80,6 +86,7 @@ const Agendamento = () => {
 
   const validate = () => {
     const newErrors = {};
+    setIsInvalidForm(false);
 
     if (!dataForm.orcamento) {
       newErrors.orcamento = "Orçamento é obrigatório";
@@ -107,14 +114,14 @@ const Agendamento = () => {
           id: dados.id,
           orcamento: dados.orcamento.id,
           inicioServico: format(parseISO(dados.inicioServico), "yyyy-MM-dd"),
-          funcionario: dados.funcionario,
+          funcionario: dados.funcionario.id,
         });
       })();
     }
 
     (async () => {
       setOrcamentoList((await OrcamentoListAll()).data.filter(item => item.aprovado === true));
-      setFuncionarioList((await FuncionarioListAll()).data.filter(item => item.disponibilidade === false ||  item.disponibilidade ===null));
+      setFuncionarioList((await FuncionarioListAll()).data.filter(item => item.disponibilidade === true));
     })();
   }, [navigate]);
 
@@ -182,7 +189,7 @@ const Agendamento = () => {
                 required
                 error={!!errors.funcionario}
                 helperText={errors.funcionario}
-                className={`mb-3 ${isReadOnly ? "input-readonly-field" : ""}`}
+                className={`mb-3 `}
               >
                 <InputLabel shrink>Funcionário Responsável</InputLabel>
                 <Select
@@ -192,7 +199,6 @@ const Agendamento = () => {
                   onChange={handleChange}
                   name="funcionario"
                   displayEmpty
-                  inputProps={{ readOnly: isReadOnly }}
                 >
                   <MenuItem value="">
                     <em>Escolha um funcionário</em>

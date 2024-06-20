@@ -66,7 +66,8 @@ function App() {
 
           <Route path="/agendamentos" element={<Agendamentos/>}/>
           <Route path="/agendamento" element={<Agendamento/>}/>
-          
+          <Route path="/agendamento/:id" element={<Agendamento/>}/>
+
           <Route path="/encerramentos" element={<Encerramentos/>}/>
           <Route path="/encerramento" element={<Encerramento/>}/>
         </Routes>
