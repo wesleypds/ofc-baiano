@@ -5,8 +5,7 @@ import LayoutBase from "../../components/layout/LayoutBase.jsx";
 import { ListAll, DeleteById } from "../../services/agendamento/agendamentoService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataGridBase from '../../components/DataGridBase/DataGridBase.jsx';
-import { CheckCircleOutlined} from '@ant-design/icons';
-import { IconButton } from '@mui/material';
+import { parseISO, format } from "date-fns";
 
 const Agendamentos = () => {
   
@@ -15,12 +14,14 @@ const Agendamentos = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   var columns = [
-    { key: "id", name: "ID" },
-    { key: "inicioServico", name: "Data de Inicio"},
+    { key: "id", name: "ID", width:40 },
+    { key: "orcamento", name: "Orçamento", renderCell: ({row}) => row.orcamento.cliente.id + ": " + row.orcamento.cliente.veiculos[0].veiculo.modelo + " / " + row.orcamento.cliente.veiculos[0].placaVeiculo}  ,
+    { key: "inicioServico", name: "Data de Inicio", renderCell: ({row}) => format(parseISO(row.inicioServico), "dd/MM/yyyy") },
     { key: "funcionario", name: "Mecânico Responsável", renderCell: ({row}) => row.funcionario.nome },
-    // { key: "finalizado", name: "Finalizado", renderCell: ({row}) => renderAprovarAgendamentoButton(row.id)}
   ];
+
 
   useEffect(() => {
     if (locationUrl.state.token !== "7f08f0ae81840a4a1887d3bdf9201efb") {
@@ -29,18 +30,14 @@ const Agendamentos = () => {
 
     (async () => {
       var resposta = await ListAll();
-      console.log(resposta.data)
+
+      
       setRows(resposta.data);
       setLoading(false);
     })();
   }, [navigate, locationUrl.state.token]);
 
 
-  const renderAprovarAgendamentoButton = (id) => (
-    <IconButton onClick={() => handleAprovarOrcamentoClient(id)}>
-      <CheckCircleOutlined  style={{ color: "#3543c4" }} />
-    </IconButton>
-  );
 
   return (
     <LayoutBase userInfo={locationUrl.state.userInfo}>
@@ -55,7 +52,6 @@ const Agendamentos = () => {
             routeAddItem={"agendamento"}
             nameExport={"agendamento"}
             deleteMethod={async (id) => { return await DeleteById(id) }}
-            additionalButton={renderAprovarAgendamentoButton}
           />
         
 
