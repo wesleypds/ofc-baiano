@@ -22,6 +22,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "moment": "^2.30.1",
+    "ofc-baiano-frontend": "file:",
     "react": "^18.2.0",
     "react-big-calendar": "^1.13.0",
     "react-csv": "^2.2.2",
